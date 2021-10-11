@@ -7,17 +7,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DAO {
+	
+		private String driver = "org.mariadb.jdbc.Driver";
+		private String url = "jdbc:mariadb://3.34.43.108:3306/member";
+		private String id = "user";
+		private String pwd = "1234";
 
-	public static void main(String[] args) {
-		String driver = "org.mariadb.jdbc.Driver";
-		String url = "jdbc:mariadb://3.34.43.108:3306/member";
-		String id = "user";
-		String pwd = "1234";
-
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
+		private Connection conn = null;
+		private PreparedStatement pstmt = null;
+		private ResultSet rs = null;
+	// 생성자
+	public DAO(){ // main함수안에서 작성되었기에 수정함
+		open();
+	}
+	
+	
+	private void open(){
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, id, pwd);
