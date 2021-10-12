@@ -1,18 +1,19 @@
-package view;
+package ProjectUI;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
-public class UserLoginPage extends JFrame{
+public class UserLoginPage extends JFrame implements ActionListener{
 	private JTextField IDtextField;
 	private JTextField PWtextField;
+	JButton Login_Button, JoinButton, IdSearchButton, PWSearchButton, BackButton;
 	public UserLoginPage(){
 		
 		this.setTitle("회원 로그인 화면");
@@ -33,44 +34,60 @@ public class UserLoginPage extends JFrame{
 		getContentPane().add(Label_PW);
 		
 		JButton Login_Button = new JButton("로그인");
-		Login_Button.setBounds(32, 183, 81, 27);
+		Login_Button.setBounds(16, 183, 81, 30);
 		getContentPane().add(Login_Button);
 		
-		JButton JoinButton = new JButton("회원가입");
-		JoinButton.setBounds(125, 183, 81, 27);
+		JoinButton = new JButton("회원가입");
+		JoinButton.setBounds(109, 183, 97, 30);
 		getContentPane().add(JoinButton);
 		
-		JButton IdSearchButton = new JButton("ID 찾기");
-		IdSearchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		IdSearchButton.setBounds(218, 183, 81, 27);
+		IdSearchButton = new JButton("ID 찾기");		
+		IdSearchButton.setBounds(218, 183, 81, 30);
 		getContentPane().add(IdSearchButton);
 		
-		JButton PWSearchButton = new JButton("PW 찾기");
-		PWSearchButton.setBounds(311, 183, 81, 27);
+		PWSearchButton = new JButton("PW 찾기");
+		PWSearchButton.setBounds(311, 183, 97, 30);
 		getContentPane().add(PWSearchButton);
 		
 		IDtextField = new JTextField();
 		IDtextField.setToolTipText("내용을 입력해주세요");
-		IDtextField.setBounds(125, 65, 219, 21);
+		IDtextField.setBounds(125, 65, 219, 25);
 		getContentPane().add(IDtextField);
 		IDtextField.setColumns(10);
 		
 		PWtextField = new JTextField();
 		PWtextField.setToolTipText("내용을 입력해주세요");
 		PWtextField.setColumns(10);
-		PWtextField.setBounds(125, 116, 219, 21);
+		PWtextField.setBounds(125, 116, 219, 25);
 		getContentPane().add(PWtextField);
 		
+		BackButton = new JButton("뒤로가기");
+		BackButton.setBounds(16, 10, 97, 27);
+		getContentPane().add(BackButton);
+		
+		this.BackButton.addActionListener(this);
+		this.JoinButton.addActionListener(this);
+		
+		
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(460,360);
+		this.setSize(445,290);
+		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 
 	}
 	public static void main(String[] args) {
 		UserLoginPage b =new UserLoginPage();
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		switch(e.getActionCommand()) {
+		//case "로그인" :
+		case "회원가입" : this.dispose(); new JoinPage(); break;
+		//case "ID 찾기" :
+		//case "PW 찾기" :
+		case "뒤로가기" : this.dispose(); new FirstPage(); break;
+		}
 	}
 }
