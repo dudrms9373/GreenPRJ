@@ -18,8 +18,7 @@ public class DBConn {
 	
 	public static Connection getInstance(){
 		try {
-			if(conn!=null)
-				return conn;
+			
 			
 			Class.forName( driver );
 			conn=DriverManager.getConnection( url,id,pwd);
