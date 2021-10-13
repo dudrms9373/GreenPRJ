@@ -1,4 +1,4 @@
-package ProjectUI;
+package view;
 
 
 
@@ -9,10 +9,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import model.FitnessDao;
+import model.FitnessVo;
 
 
 public class JoinPage extends JFrame implements ActionListener{
@@ -25,6 +29,8 @@ public class JoinPage extends JFrame implements ActionListener{
 	JButton             ButtonJoin, ButtonCancel;
 	private JTextField textFieldHeight;
 	private JTextField textFieldWeight;
+	
+
 	
 
 
@@ -143,6 +149,7 @@ public class JoinPage extends JFrame implements ActionListener{
 	      
 	      //이벤트
 	      this.ButtonCancel.addActionListener(this);
+	      this.ButtonJoin.addActionListener(this);
 		
 		
 	}
@@ -156,9 +163,24 @@ public class JoinPage extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		//case "가입" : getData();
+		case "가입" : insertUser();   this.dispose(); new UserLoginPage(); break;
 		case "취소" : this.dispose(); new UserLoginPage(); break;
 		}
 		
+	}
+
+
+	private void insertUser() {
+		FitnessDao fd = new FitnessDao();
+		FitnessVo fv = new FitnessVo(TextFieldName.getText(), TextFieldBirth.getText(), 
+				                     TextFieldID.getText(),   TextFieldPWD.getText(), 
+				                     TextFieldTel.getText(), TextFieldGender.getText(), TextFieldAddres.getText(),
+				                     textFieldHeight.getText(),textFieldWeight.getText());
+		fd.JoinFitness(fv);
+		// 메세지 상자 출력
+	      JOptionPane.showMessageDialog(null,"추가되었습니다","추가",JOptionPane.OK_OPTION
+	            );
+	      
+		 
 	}
 }
