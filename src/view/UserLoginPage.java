@@ -61,8 +61,8 @@ public class UserLoginPage extends JFrame implements ActionListener{
 		PWtextField.setBounds(125, 116, 219, 25);
 		getContentPane().add(PWtextField);
 		
-		BackButton = new JButton("뒤로가기");
-		BackButton.setBounds(16, 10, 97, 27);
+		BackButton = new JButton("<이전");
+		BackButton.setBounds(16, 10, 80, 27);
 		getContentPane().add(BackButton);
 		
 		this.BackButton.addActionListener(this);
@@ -87,7 +87,7 @@ public class UserLoginPage extends JFrame implements ActionListener{
 		case "회원가입" : this.dispose(); new JoinPage(); break;
 		//case "ID 찾기" :
 		//case "PW 찾기" :
-		case "뒤로가기" : this.dispose(); new FirstPage(); break;
+		case "<이전" : this.dispose(); new FirstPage(); break;
 		}
 	}
 }

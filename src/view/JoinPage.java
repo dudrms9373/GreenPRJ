@@ -23,6 +23,8 @@ public class JoinPage extends JFrame implements ActionListener{
 	JPasswordField      PasswordFieldPWD;
 	JTextArea           taIntro;
 	JButton             ButtonJoin, ButtonCancel;
+	private JTextField textFieldHeight;
+	private JTextField textFieldWeight;
 	
 
 
@@ -32,7 +34,7 @@ public class JoinPage extends JFrame implements ActionListener{
 		
 		
 	      this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	      this.setSize( 380, 510 );
+	      this.setSize( 380, 610 );
 	      this.setResizable(false);
 	      this.setLocationRelativeTo(null);
 	      getContentPane().setLayout(null);
@@ -68,55 +70,75 @@ public class JoinPage extends JFrame implements ActionListener{
 	      
 	      //텍스트 필드
 	      TextFieldName = new JTextField();
-	      TextFieldName.setFont(new Font("굴림", Font.PLAIN, 13));
 	      TextFieldName.setBounds(123, 30, 204, 25);
+	      TextFieldName.setFont(new Font("굴림", Font.PLAIN, 13));
 	      getContentPane().add(TextFieldName);
 	      TextFieldName.setColumns(10);
 	      
 	      TextFieldBirth = new JTextField();
+	      TextFieldBirth.setBounds(123, 80, 204, 25);
 	      TextFieldBirth.setFont(new Font("굴림", Font.PLAIN, 13));
 	      TextFieldBirth.setColumns(10);
-	      TextFieldBirth.setBounds(123, 80, 204, 25);
 	      getContentPane().add(TextFieldBirth);
 	      
 	      TextFieldID = new JTextField();
+	      TextFieldID.setBounds(123, 130, 204, 25);
 	      TextFieldID.setFont(new Font("굴림", Font.PLAIN, 13));
 	      TextFieldID.setColumns(10);
-	      TextFieldID.setBounds(123, 130, 204, 25);
 	      getContentPane().add(TextFieldID);
 	      
 	      TextFieldPWD = new JTextField();
+	      TextFieldPWD.setBounds(123, 180, 204, 25);
 	      TextFieldPWD.setFont(new Font("굴림", Font.PLAIN, 13));
 	      TextFieldPWD.setColumns(10);
-	      TextFieldPWD.setBounds(123, 180, 204, 25);
 	      getContentPane().add(TextFieldPWD);
 	      
 	      TextFieldTel = new JTextField();
+	      TextFieldTel.setBounds(123, 230, 204, 25);
 	      TextFieldTel.setFont(new Font("굴림", Font.PLAIN, 13));
 	      TextFieldTel.setColumns(10);
-	      TextFieldTel.setBounds(123, 230, 204, 25);
 	      getContentPane().add(TextFieldTel);
 	      
 	      TextFieldGender = new JTextField();
+	      TextFieldGender.setBounds(123, 280, 204, 25);
 	      TextFieldGender.setFont(new Font("굴림", Font.PLAIN, 13));
 	      TextFieldGender.setColumns(10);
-	      TextFieldGender.setBounds(123, 280, 204, 25);
 	      getContentPane().add(TextFieldGender);
 	      
 	      TextFieldAddres = new JTextField();
+	      TextFieldAddres.setBounds(123, 330, 204, 25);
 	      TextFieldAddres.setFont(new Font("굴림", Font.PLAIN, 13));
 	      TextFieldAddres.setColumns(10);
-	      TextFieldAddres.setBounds(123, 330, 204, 25);
 	      getContentPane().add(TextFieldAddres);
 	      
 	      //버튼
 	      ButtonJoin = new JButton("가입");
-	      ButtonJoin.setBounds(47, 397, 111, 45);
+	      ButtonJoin.setBounds(47, 494, 111, 45);
 	      getContentPane().add(ButtonJoin);
 	      
 	      ButtonCancel = new JButton("취소");
-	      ButtonCancel.setBounds(199, 397, 111, 45);
+	      ButtonCancel.setBounds(198, 494, 111, 45);
 	      getContentPane().add(ButtonCancel);
+	      
+	      JLabel heightLabel = new JLabel("키");
+	      heightLabel.setBounds(25, 380, 99, 26);
+	      getContentPane().add(heightLabel);
+	      
+	      JLabel weightLabel = new JLabel("몸무게");
+	      weightLabel.setBounds(25, 430, 99, 26);
+	      getContentPane().add(weightLabel);
+	      
+	      textFieldHeight = new JTextField();
+	      textFieldHeight.setFont(new Font("굴림", Font.PLAIN, 13));
+	      textFieldHeight.setColumns(10);
+	      textFieldHeight.setBounds(123, 381, 204, 25);
+	      getContentPane().add(textFieldHeight);
+	      
+	      textFieldWeight = new JTextField();
+	      textFieldWeight.setFont(new Font("굴림", Font.PLAIN, 13));
+	      textFieldWeight.setColumns(10);
+	      textFieldWeight.setBounds(123, 431, 204, 25);
+	      getContentPane().add(textFieldWeight);
 	      this.setVisible(true);
 	      
 	      //이벤트
@@ -139,12 +161,4 @@ public class JoinPage extends JFrame implements ActionListener{
 		}
 		
 	}
-
-
-	//private FitnessVo getData() {
-		
-	//	FitnessVo user = new FitnessVo(getName(), getName(), getName(), getName(), getTitle(), getWarningString(), getName())
-	//	return user;
-		
-	//}
 }
