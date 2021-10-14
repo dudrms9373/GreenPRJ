@@ -501,7 +501,49 @@ public String loginCheck1(String id) {
 	
 	}
 	
-	
+	//Id 기준 실행 내역 전체 조회(Vector)
+	public Vector getExeInfo(String Id, String exeCheck) {
+		Vector  outV   = new Vector(); 
+		
+		Connection         conn   = null;
+		PreparedStatement  pstmt  = null;
+		ResultSet          rs     = null;
+		
+		String  sql  = "SELECT  E.EXE_ID,  E.EXE_NOTE, E.HEIGHT, E.WEIGHT,  ";
+		sql         += " E.EXE_CHECK, TO_CHAR(R.RES_DATE, 'YYYY-MM-DD') RES_DATE  ";
+		sql         += " FROM   EXECUTION E, RESERVATION R, MEMBER M   ";
+		sql	    += " WHERE R.MEM_ID = M.MEM_ID";
+		sql 	    += " AND R.RES_ID = E.RES_ID";
+		sql 	    += " AND M.ID = ? AND E.EXE_CHECK= ?";
+		
+		try {
+			conn      =  DBConn.getInstance();
+			pstmt     =  conn.prepareStatement(sql);
+			
+			rs  =  pstmt.executeQuery();
+			while( rs.next() ) {
+				
+				Vector    v  =   new  Vector(); 
+				v.add( rs.getInt("EXE_ID") );
+				v.add( rs.getString("EXE_NOTE") ); 
+				v.add( rs.getInt("HEIGHT") ); 
+				v.add( rs.getInt("WEIGHT") ); 
+				v.add( rs.getString("EXE_CHECK") );
+				v.add( rs.getString("RES_DATE"));
+				outV.add( v );							
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if( rs    != null )  rs.close();
+				if( pstmt != null )  pstmt.close();
+			} catch (SQLException e) {
+			}
+		} 
+		return   outV;
+	}
 	
 }
 	
