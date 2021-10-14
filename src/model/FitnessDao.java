@@ -430,7 +430,35 @@ public String loginCheck1(String id) {
 			return result;
 
 		}
+	
+	//특이사항 추가
+	public String writeSpe(SpecialVo speVo){
 		
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		
+		String result = "특이사항 추가 실패";
+
+		String sql="INSERT INTO SPECIAL(SPE_ID, SPE_NOTE, MEM_ID)";
+		sql	 +=" VALUES (SEQ_SPE.NEXTVAL, ? , ? )";
+		
+		try {
+			conn=DBConn.getInstance();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, speVo.getSpeNote());
+			pstmt.setInt(2, speVo.getSpeMemId());
+			pstmt.executeUpdate();
+			
+			result= "특이사항이 추가되었습니다";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+		
+	
+	
 		}
 	
 	
