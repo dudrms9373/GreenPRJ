@@ -66,7 +66,7 @@ public class JoinPage extends JFrame implements ActionListener{
 	      LabelTel.setBounds(25, 230, 77, 26);
 	      getContentPane().add(LabelTel);
 	      
-	      JLabel LabelGender = new JLabel("성별");
+	      JLabel LabelGender = new JLabel("성별  (  M , F  )");
 	      LabelGender.setBounds(25, 280, 77, 26);
 	      getContentPane().add(LabelGender);
 	      
@@ -155,6 +155,9 @@ public class JoinPage extends JFrame implements ActionListener{
 	}
 	
 	
+	
+
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
@@ -173,7 +176,7 @@ public class JoinPage extends JFrame implements ActionListener{
 				                     textFieldHeight.getText(),textFieldWeight.getText());
 		fd.JoinFitness(fv);
 		// 메세지 상자 출력
-	      JOptionPane.showMessageDialog(null,"회원가입 완료","완료",JOptionPane.OK_OPTION);
+	      JOptionPane.showMessageDialog(null,"회원가입 완료","완료",JOptionPane.INFORMATION_MESSAGE);
 	      
 	}
 }

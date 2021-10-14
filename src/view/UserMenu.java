@@ -1,20 +1,22 @@
-package ProjectUI;
+package view;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class UserMenu extends JFrame{
+public class UserMenu extends JFrame implements ActionListener{
 	
-	String UserName=null;
+	
 	JButton LogoutButton, PTButton, InfoButton, ExtensionButton;
-	public UserMenu() {
+	public UserMenu(String id) {
 		this.setTitle("4. 회원로그인");
 		
 		
-		JLabel TitleLabel = new JLabel("<html><body style='text-align:center;'>어서오세요."+UserName+"님!<br />오늘도 득근 하세요!!</body></html>",JLabel.CENTER);
+		JLabel TitleLabel = new JLabel("<html><body style='text-align:center;'>어서오세요."+id+"님!<br />오늘도 득근 하세요!!</body></html>",JLabel.CENTER);
 		TitleLabel.setFont(new Font("굴림", Font.BOLD, 30));
 		TitleLabel.setBounds(54, 10, 400, 113);
 		getContentPane().add(TitleLabel);
@@ -37,12 +39,21 @@ public class UserMenu extends JFrame{
 		
 		getContentPane().setLayout(null);
 		
+		this.LogoutButton.addActionListener(this);
+		
 		
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(600,500);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		switch(e.getActionCommand()) {
+		case "로그아웃" : new UserLoginPage(); this.dispose(); break;
+		}
+		
 	}
 
 	
