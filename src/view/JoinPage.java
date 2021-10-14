@@ -155,11 +155,6 @@ public class JoinPage extends JFrame implements ActionListener{
 	}
 	
 	
-	public static void main(String[] args) {
-	      new JoinPage();
-	   }
-
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
