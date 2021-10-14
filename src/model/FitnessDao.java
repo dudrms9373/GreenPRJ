@@ -157,7 +157,44 @@ public class FitnessDao {
 			}
 		}
 	}
-	
+	// 남은기간 연장
+	public void prolong(ProlongVo ProlongVo) {
+
+		Connection conn;
+		PreparedStatement pstmt = null;
+		String sql = "";
+
+		conn = DBConn.getInstance();
+
+		sql = "INSERT INTO PROLONG (PROL_ID,STATUS,START_DATE,END_DATE,PROL_DATE,MEM_ID) ";
+		sql += " VALUES (SEQ_PRO.NEXTVAL,?,?,?,?,?)";
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ProlongVo.getStatus());
+			pstmt.setString(2, ProlongVo.getStart_date());
+			pstmt.setString(3, ProlongVo.getEnd_date());
+			pstmt.setString(4, ProlongVo.getProl_date());
+			pstmt.setString(5, ProlongVo.getMem_id());
+
+			pstmt.executeUpdate();
+			conn.commit();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+}
+
 	//로그인
 	public int loginCheck(String id , String pwd) {
 		
