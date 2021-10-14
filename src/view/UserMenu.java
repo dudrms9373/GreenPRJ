@@ -45,7 +45,5 @@ public class UserMenu extends JFrame{
 		this.setLocationRelativeTo(null);
 	}
 
-	public static void main(String[] args) {
-		UserMenu a= new UserMenu();
-	}
+	
 }
