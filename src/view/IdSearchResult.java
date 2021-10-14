@@ -38,10 +38,7 @@ public class IdSearchResult extends JFrame implements ActionListener{
 		this.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		new IdSearchResult("3","3");
-
-	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
