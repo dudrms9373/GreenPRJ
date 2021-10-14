@@ -391,7 +391,7 @@ public String loginCheck1(String id) {
 			String result = "예약에 실패했습니다";
 			String msg="";
 			String sql = "INSERT INTO RESERVATION(RES_ID ,RES_DATE, RES_NOTE, RES_CHECK, MEM_ID, T_ID)";
-			sql   	  += " VALUES (SEQ_RES ,? , ? , ? , ? , ? )";
+			sql   	  += " VALUES (SEQ_RES.NEXTVAL ,? , ? , ? , ? , ? )";
 			
 			try {
 				conn=DBConn.getInstance();
