@@ -465,7 +465,45 @@ public String loginCheck1(String id) {
 		
 	
 	
-		}
+	//   PT/상담 내역 추가
+	public String writeExe(ExecutionVo exeVo){
+		Connection conn =null;
+		PreparedStatement pstmt =null;
+		
+		String result = "실행 내역 추가 실패";
+		
+		String sql= "INSERT INTO EXECUTION(EXE_ID, EXE_NOTE,";
+		sql		 += " HEIGHT, WEIGHT, EXE_CHECK, RES_ID )";
+		sql      += " VALUES ( SEQ_EXE.NEXTVAL, ? , ? , ? , ? , ? )";
+		conn=DBConn.getInstance();
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, exeVo.getExeNote());
+			pstmt.setInt(2, exeVo.getHeight());
+			pstmt.setInt(3, exeVo.getWeight());
+			pstmt.setString(4, exeVo.getExeCheck());
+			pstmt.setInt(5, exeVo.getResId());
+			
+			pstmt.executeUpdate();
+			
+			result="실행 내역 추가되었습니다.";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if( pstmt != null )  pstmt.close();
+			} catch (SQLException e) {
+			}
+		
+		return result;
+		
+	}
+	
+	}
+	
+	
+	
+}
 	
 	
 
