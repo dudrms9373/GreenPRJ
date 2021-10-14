@@ -22,7 +22,7 @@ import model.FitnessVo;
 public class JoinPage extends JFrame implements ActionListener{
 	
 	JPanel           p;
-	JTextField          TextFieldID, TextFieldName, TextFieldBirth, TextFieldPWD, 
+	JTextField          TextFieldID, TextFieldName, TextFieldBirth, PasswordFieldPWD1, 
 	                    TextFieldTel, TextFieldGender, TextFieldAddres;
 	JPasswordField      PasswordFieldPWD;
 	JTextArea           taIntro;
@@ -93,11 +93,11 @@ public class JoinPage extends JFrame implements ActionListener{
 	      TextFieldID.setColumns(10);
 	      getContentPane().add(TextFieldID);
 	      
-	      TextFieldPWD = new JTextField();
-	      TextFieldPWD.setBounds(123, 180, 204, 25);
-	      TextFieldPWD.setFont(new Font("굴림", Font.PLAIN, 13));
-	      TextFieldPWD.setColumns(10);
-	      getContentPane().add(TextFieldPWD);
+	      PasswordFieldPWD =new JPasswordField();
+	      PasswordFieldPWD.setBounds(123, 180, 204, 25);
+	      PasswordFieldPWD.setFont(new Font("굴림", Font.PLAIN, 13));
+	      PasswordFieldPWD.setColumns(10);
+	      getContentPane().add(PasswordFieldPWD);
 	      
 	      TextFieldTel = new JTextField();
 	      TextFieldTel.setBounds(123, 230, 204, 25);
@@ -173,14 +173,12 @@ public class JoinPage extends JFrame implements ActionListener{
 	private void insertUser() {
 		FitnessDao fd = new FitnessDao();
 		FitnessVo fv = new FitnessVo(TextFieldName.getText(), TextFieldBirth.getText(), 
-				                     TextFieldID.getText(),   TextFieldPWD.getText(), 
+				                     TextFieldID.getText(),   PasswordFieldPWD.getText(), 
 				                     TextFieldTel.getText(), TextFieldGender.getText(), TextFieldAddres.getText(),
 				                     textFieldHeight.getText(),textFieldWeight.getText());
 		fd.JoinFitness(fv);
 		// 메세지 상자 출력
-	      JOptionPane.showMessageDialog(null,"추가되었습니다","추가",JOptionPane.OK_OPTION
-	            );
+	      JOptionPane.showMessageDialog(null,"회원가입 완료","완료",JOptionPane.OK_OPTION);
 	      
-		 
 	}
 }
