@@ -22,6 +22,9 @@ public class FitnessDao {
 	public void updateMem
 			(String id, String name, String pwd ,
 					String tel,String addr, String speNote) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
 		String sql="UPDATE MEMBER AS M, SPECIAL AS S";
 		sql		+= " SET M.MEM_NAME= ?";
 		sql		+= " ,   M.TEL = ?";
@@ -57,6 +60,9 @@ public class FitnessDao {
 	
 	//회원 정보 삭제
 	public void removeMem(String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
 		String sql="DELETE FROM MEMBER WHERE ID = ?";
 		
 		try {
