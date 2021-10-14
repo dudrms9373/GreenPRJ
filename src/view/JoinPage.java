@@ -16,13 +16,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import model.FitnessDao;
-import model.FitnessVo;
+import model.MemberVo;
 
 
 public class JoinPage extends JFrame implements ActionListener{
 	
 	JPanel           p;
-	JTextField          TextFieldID, TextFieldName, TextFieldBirth, PasswordFieldPWD1, 
+	JTextField          TextFieldID, TextFieldName, TextFieldBirth, TextFieldPWD, 
 	                    TextFieldTel, TextFieldGender, TextFieldAddres;
 	JPasswordField      PasswordFieldPWD;
 	JTextArea           taIntro;
@@ -66,7 +66,7 @@ public class JoinPage extends JFrame implements ActionListener{
 	      LabelTel.setBounds(25, 230, 77, 26);
 	      getContentPane().add(LabelTel);
 	      
-	      JLabel LabelGender = new JLabel("성별  (  M , F  )");
+	      JLabel LabelGender = new JLabel("성별");
 	      LabelGender.setBounds(25, 280, 77, 26);
 	      getContentPane().add(LabelGender);
 	      
@@ -93,11 +93,11 @@ public class JoinPage extends JFrame implements ActionListener{
 	      TextFieldID.setColumns(10);
 	      getContentPane().add(TextFieldID);
 	      
-	      PasswordFieldPWD =new JPasswordField();
-	      PasswordFieldPWD.setBounds(123, 180, 204, 25);
-	      PasswordFieldPWD.setFont(new Font("굴림", Font.PLAIN, 13));
-	      PasswordFieldPWD.setColumns(10);
-	      getContentPane().add(PasswordFieldPWD);
+	      TextFieldPWD = new JTextField();
+	      TextFieldPWD.setBounds(123, 180, 204, 25);
+	      TextFieldPWD.setFont(new Font("굴림", Font.PLAIN, 13));
+	      TextFieldPWD.setColumns(10);
+	      getContentPane().add(TextFieldPWD);
 	      
 	      TextFieldTel = new JTextField();
 	      TextFieldTel.setBounds(123, 230, 204, 25);
@@ -155,7 +155,9 @@ public class JoinPage extends JFrame implements ActionListener{
 	}
 	
 	
-	
+	public static void main(String[] args) {
+	      new JoinPage();
+	   }
 
 
 	@Override
@@ -170,13 +172,15 @@ public class JoinPage extends JFrame implements ActionListener{
 
 	private void insertUser() {
 		FitnessDao fd = new FitnessDao();
-		FitnessVo fv = new FitnessVo(TextFieldName.getText(), TextFieldBirth.getText(), 
-				                     TextFieldID.getText(),   PasswordFieldPWD.getText(), 
+		MemberVo fv = new MemberVo( TextFieldName.getText(), TextFieldBirth.getText(), 
+				                     TextFieldID.getText(),   TextFieldPWD.getText(), 
 				                     TextFieldTel.getText(), TextFieldGender.getText(), TextFieldAddres.getText(),
 				                     textFieldHeight.getText(),textFieldWeight.getText());
 		fd.JoinFitness(fv);
 		// 메세지 상자 출력
-	      JOptionPane.showMessageDialog(null,"회원가입 완료","완료",JOptionPane.INFORMATION_MESSAGE);
+	      JOptionPane.showMessageDialog(null,"추가되었습니다","추가",JOptionPane.OK_OPTION
+	            );
 	      
+		 
 	}
 }
