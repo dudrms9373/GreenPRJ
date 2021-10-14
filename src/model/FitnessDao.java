@@ -1,12 +1,20 @@
 package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+
 import db.DBConn;
+import view.UserLoginPage;
+import view.UserMenu;
 
 
 public class FitnessDao {
+	static String n1="";
+	static String i1="";
 	
 	
 	// 회원 추가
@@ -47,47 +55,239 @@ public class FitnessDao {
 			}
 		}
 	}
-
-	// 예약하기 (결과 메시지 )
-	public String reserve(ReservationVo resVo){
-		String result = "예약에 실패했습니다";
-		String msg="";
-		String sql = "INSERT INTO RESERVATION(RES_ID ,RES_DATE, RES_NOTE, RES_CHECK, MEM_ID, T_ID)";
-		sql   	  += " VALUES (SEQ_RES ,? , ? , ? , ? , ? )";
+	
+	//로그인
+	public int loginCheck(String id , String pwd) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		FitnessVo vo = new FitnessVo();
+		String sql = "";
+		
+		conn= DBConn.getInstance();
+		
+		sql = "SELECT * FROM MEMBER M";
+		sql+= " WHERE M.ID = ? ";
+		sql+= " AND   M.PWD = ? ";
 		
 		try {
-			conn=DBConn.getInstance();
-			pstmt=conn.prepareStatement(sql);
-			pstmt.setString(1, resVo.getResDate());
-			pstmt.setString(2, resVo.getResNote());
-			pstmt.setString(3, resVo.getResCheck());
-			pstmt.setString(4, resVo.getResMemId());
-			pstmt.setString(5, resVo.getResTId());
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
 			
-			pstmt.executeUpdate();
-			if(resVo.getResCheck().equals("P")){
-				msg = "PT";
-			}
-			if(resVo.getResCheck().equals("C")){
-				msg = "상담";
-			}
+			rs = pstmt.executeQuery();
 			
-			result = resVo.getResNote()+"에 "+msg+"가 예약되었습니다";
+			if(rs.next()) {
+				String name =rs.getString(2);
+				System.out.println(name+"님 로그인 성공");
+				return 1;
+			}else {
+				JOptionPane.showMessageDialog(null, "로그인 실패");
+			}
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
+		}finally {
 			try {
 				if( rs    != null )  rs.close();
 				if( pstmt != null )  pstmt.close();
 			} catch (SQLException e) {
 			}
-	 
-
-		return result;
-
+		} 
+		return -1;
+	}
+	//로그인 (이름 가져오기)
+public String loginCheck1(String id) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		FitnessVo vo = new FitnessVo();
+		String sql = "";
+		String n = "";
+		
+		conn= DBConn.getInstance();
+		
+		sql = "SELECT MEM_NAME FROM MEMBER M";
+		sql+= " WHERE M.ID = ? ";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				String name =rs.getString(1);
+				return name;
+			}else {
+				JOptionPane.showMessageDialog(null, "로그인 실패");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if( rs    != null )  rs.close();
+				if( pstmt != null )  pstmt.close();
+			} catch (SQLException e) {
+			}
+		} 
+		return n;
 	}
 	
+	//회원 아이디 찾기(리턴값 = FitnessVo 클래스)
+	public FitnessVo IdSearch(String name,String birth,String tel) {
+		FitnessVo vo =null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		FitnessVo fv = new FitnessVo();
+		String sql =" ";
+		
+		conn = DBConn.getInstance();
+		
+		sql = "SELECT * FROM MEMBER  ";
+		sql+= " WHERE MEM_NAME = ? ";
+		sql+= " AND   MEM_BIRTH = ? ";
+		sql+= " AND   tel = ? ";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, birth);
+			pstmt.setString(3, tel);
+			
+			
+			rs = pstmt.executeQuery();
+			
+			if( rs.next() ) {
+			
+				String  name1= rs.getString(2);
+				String  birth1= rs.getString(3);
+				String  id= rs.getString(4);
+				String  pwd= rs.getString(5);
+				String  tel1= rs.getString(6);
+				String  gender= rs.getString(7);
+				String  address= rs.getString(8);
+				String  height= rs.getString(9);
+				String  weight= rs.getString(10);
+				
+				vo = new FitnessVo(name1, birth1, id, pwd, tel1, gender, address, height, weight);
+				
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		
+		}finally {
+			try {
+				if( rs    != null )  rs.close();
+				if( pstmt != null )  pstmt.close();
+			} catch (SQLException e) {
+			}
+		} 
+		return vo;
 	}
 	
+	//비밀번호 찾기
+	public FitnessVo PwdSearch(String name,String birth,String id) {
+		FitnessVo vo =null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		FitnessVo fv = new FitnessVo();
+		String sql =" ";
+		
+		conn = DBConn.getInstance();
+		
+		sql = "SELECT * FROM MEMBER  ";
+		sql+= " WHERE MEM_NAME = ? ";
+		sql+= " AND   MEM_BIRTH = ? ";
+		sql+= " AND   ID = ? ";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, birth);
+			pstmt.setString(3, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if( rs.next() ) {
+			
+				String  name1= rs.getString(2);
+				String  birth1= rs.getString(3);
+				String  id1= rs.getString(4);
+				String  pwd= rs.getString(5);
+				String  tel1= rs.getString(6);
+				String  gender= rs.getString(7);
+				String  address= rs.getString(8);
+				String  height= rs.getString(9);
+				String  weight= rs.getString(10);
+				
+				vo = new FitnessVo(name1, birth1, id1, pwd, tel1, gender, address, height, weight);
+				
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		
+		}finally {
+			try {
+				if( rs    != null )  rs.close();
+				if( pstmt != null )  pstmt.close();
+			} catch (SQLException e) {
+			}
+		} 
+		return vo;
+	}
+	// 예약하기 (결과 메시지 )
+		public String reserve(ReservationVo resVo){
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String result = "예약에 실패했습니다";
+			String msg="";
+			String sql = "INSERT INTO RESERVATION(RES_ID ,RES_DATE, RES_NOTE, RES_CHECK, MEM_ID, T_ID)";
+			sql   	  += " VALUES (SEQ_RES ,? , ? , ? , ? , ? )";
+			
+			try {
+				conn=DBConn.getInstance();
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, resVo.getResDate());
+				pstmt.setString(2, resVo.getResNote());
+				pstmt.setString(3, resVo.getResCheck());
+				pstmt.setString(4, resVo.getResMemId());
+				pstmt.setString(5, resVo.getResTId());
+				
+				pstmt.executeUpdate();
+				if(resVo.getResCheck().equals("P")){
+					msg = "PT";
+				}
+				if(resVo.getResCheck().equals("C")){
+					msg = "상담";
+				}
+				
+				result = resVo.getResNote()+"에 "+msg+"가 예약되었습니다";
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if( rs    != null )  rs.close();
+					if( pstmt != null )  pstmt.close();
+				} catch (SQLException e) {
+				}
+			} 
+
+			return result;
+
+		}
+		
+		}
 	
-}
+	
+
+
+
