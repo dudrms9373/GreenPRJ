@@ -48,4 +48,46 @@ public class FitnessDao {
 		}
 	}
 
+	// 예약하기 (결과 메시지 )
+	public String reserve(ReservationVo resVo){
+		String result = "예약에 실패했습니다";
+		String msg="";
+		String sql = "INSERT INTO RESERVATION(RES_ID ,RES_DATE, RES_NOTE, RES_CHECK, MEM_ID, T_ID)";
+		sql   	  += " VALUES (SEQ_RES ,? , ? , ? , ? , ? )";
+		
+		try {
+			conn=DBConn.getInstance();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, resVo.getResDate());
+			pstmt.setString(2, resVo.getResNote());
+			pstmt.setString(3, resVo.getResCheck());
+			pstmt.setString(4, resVo.getResMemId());
+			pstmt.setString(5, resVo.getResTId());
+			
+			pstmt.executeUpdate();
+			if(resVo.getResCheck().equals("P")){
+				msg = "PT";
+			}
+			if(resVo.getResCheck().equals("C")){
+				msg = "상담";
+			}
+			
+			result = resVo.getResNote()+"에 "+msg+"가 예약되었습니다";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if( rs    != null )  rs.close();
+				if( pstmt != null )  pstmt.close();
+			} catch (SQLException e) {
+			}
+	 
+
+		return result;
+
+	}
+	
+	}
+	
+	
 }
