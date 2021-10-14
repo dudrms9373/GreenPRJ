@@ -405,8 +405,8 @@ public String loginCheck1(String id) {
 				pstmt.setString(1, resVo.getResDate());
 				pstmt.setString(2, resVo.getResNote());
 				pstmt.setString(3, resVo.getResCheck());
-				pstmt.setString(4, resVo.getResMemId());
-				pstmt.setString(5, resVo.getResTId());
+				pstmt.setInt(4, resVo.getResMemId());
+				pstmt.setInt(5, resVo.getResTId());
 				
 				pstmt.executeUpdate();
 				if(resVo.getResCheck().equals("P")){
