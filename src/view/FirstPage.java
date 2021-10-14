@@ -46,10 +46,7 @@ public class FirstPage extends JFrame implements ActionListener, MouseListener{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	public static void main(String[] args) {
-		new FirstPage();
-
-	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
