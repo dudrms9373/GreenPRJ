@@ -17,6 +17,49 @@ public class FitnessDao {
 	static String i1="";
 	
 	
+	
+	// 회원조회
+	public Vector MemberList() {
+		Vector outV = new Vector();
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		String sql = "SELECT M.MEM_ID, M.MEM_NAME, M.TEL, M.ADDR, M.GENDER, R.RES_DATE ";
+			   sql += " FROM MEMBER M, RESERVATION R ";
+			   sql += " WHERE M.MEM_ID = R.MEM_ID ";
+
+		try {
+			conn = DBConn.getInstance();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Vector v = new Vector();
+				v.add(rs.getString("MEM_ID"));
+				v.add(rs.getString("MEM_NAME"));
+				v.add(rs.getString("GENDER"));
+				v.add(rs.getString("TEL"));
+				v.add(rs.getString("ADDR"));
+				v.add(rs.getString("RES_DATE"));
+				outV.add(v);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		return outV;
+	}
+	
 	// 회원 추가
 	public void JoinFitness(FitnessVo FitnessVo) {
 		Connection conn;
