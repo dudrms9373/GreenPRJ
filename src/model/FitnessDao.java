@@ -120,7 +120,7 @@ public class FitnessDao {
 	}
 	
 	// 회원 추가
-	public void JoinFitness(FitnessVo FitnessVo) {
+	public void JoinFitness(MemberVo MemberVo) {
 		Connection conn;
 		PreparedStatement pstmt = null;
 		String sql = "";
@@ -132,15 +132,15 @@ public class FitnessDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, FitnessVo.getName());
-			pstmt.setString(2, FitnessVo.getBirth());
-			pstmt.setString(3, FitnessVo.getId());
-			pstmt.setString(4, FitnessVo.getPwd());
-			pstmt.setString(5, FitnessVo.getTel());
-			pstmt.setString(6, FitnessVo.getGender());
-			pstmt.setString(7, FitnessVo.getAddress());
-			pstmt.setString(8, FitnessVo.getHeight());
-			pstmt.setString(9, FitnessVo.getWeight());
+			pstmt.setString(1, MemberVo.getName());
+			pstmt.setString(2, MemberVo.getBirth());
+			pstmt.setString(3, MemberVo.getId());
+			pstmt.setString(4, MemberVo.getPwd());
+			pstmt.setString(5, MemberVo.getTel());
+			pstmt.setString(6, MemberVo.getGender());
+			pstmt.setString(7, MemberVo.getAddress());
+			pstmt.setString(8, MemberVo.getHeight());
+			pstmt.setString(9, MemberVo.getWeight());
 			
 			pstmt.executeUpdate();
 			
