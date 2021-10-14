@@ -36,10 +36,7 @@ public class PwdSearchResult extends JFrame implements ActionListener{
 		this.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		new PwdSearchResult("3","3");
-
-	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
