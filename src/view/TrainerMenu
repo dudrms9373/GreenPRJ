@@ -144,7 +144,5 @@ public class TrainerMenu extends JFrame{
 		
 		
 	}
-	public static void main(String[] args) {
-		new TrainerMenu();
-	}
+	
 }
