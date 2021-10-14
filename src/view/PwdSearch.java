@@ -108,7 +108,7 @@ public class PwdSearch extends JFrame implements ActionListener{
 			dispose();
 			new PwdSearchResult(result.getName(),result.getPwd()); 
 		}else{
-			JOptionPane.showMessageDialog(null,"조회된 아이디가 없습니다","에러 메세지",JOptionPane.OK_OPTION );
+			JOptionPane.showMessageDialog(null,"조회된 비밀번호가 없습니다","에러 메세지",JOptionPane.OK_OPTION );
 		          // 화면 초기화
 		          clearData();
 		}
