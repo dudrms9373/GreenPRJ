@@ -82,10 +82,7 @@ public class PwdSearch extends JFrame implements ActionListener{
 		this.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		new PwdSearch();
-
-	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
