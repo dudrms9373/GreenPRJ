@@ -77,9 +77,7 @@ public class UserLoginPage extends JFrame implements ActionListener{
 		this.setVisible(true);
 
 	}
-	public static void main(String[] args) {
-		UserLoginPage b =new UserLoginPage();
-	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
