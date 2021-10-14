@@ -452,6 +452,12 @@ public String loginCheck1(String id) {
 			result= "특이사항이 추가되었습니다";
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt !=null) pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return result;
