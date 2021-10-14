@@ -5,10 +5,10 @@ public class ReservationVo {
 	private String  resDate;	//예약된 시간
 	private String  resNote;	//예약된 내용
 	private String  resCheck;	//PT인지 상담인지의 여부
-	private String  resMemId;	//예약정보 테이블 상의 회원번호
-	private String  resTId; 	//예약정보 테이블 상의 트레이너번호
+	private int  resMemId;	//예약정보 테이블 상의 회원번호
+	private int  resTId; 	//예약정보 테이블 상의 트레이너번호
 	// 생성자
-	public ReservationVo(String resDate, String resNote, String resCheck, String resMemId, String resTId) {
+	public ReservationVo(String resDate, String resNote, String resCheck, int resMemId, int resTId) {
 		this.resDate = resDate;
 		this.resNote = resNote;
 		this.resCheck = resCheck;
@@ -34,16 +34,16 @@ public class ReservationVo {
 	public void setResCheck(String resCheck) {
 		this.resCheck = resCheck;
 	}
-	public String getResMemId() {
+	public int getResMemId() {
 		return resMemId;
 	}
-	public void setResMemId(String resMemId) {
+	public void setResMemId(int resMemId) {
 		this.resMemId = resMemId;
 	}
-	public String getResTId() {
+	public int getResTId() {
 		return resTId;
 	}
-	public void setResTId(String resTId) {
+	public void setResTId(int resTId) {
 		this.resTId = resTId;
 	}
 	//toString()
