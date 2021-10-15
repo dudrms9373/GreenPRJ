@@ -138,8 +138,9 @@ public class FitnessDao {
 
 		conn = DBConn.getInstance();
 
-		sql = "INSERT INTO MEMBER M(m.mem_id,m.mem_name,m.mem_birth,m.id,m.pwd,m.tel,m.gender,m.addr,m.height,m.weight) ";
-		sql += " VALUES (SEQUENCE1.nextval,?,?,?,?,?,?,?,?,?)";
+		sql      = "INSERT INTO MEMBER(MEM_ID, MEM_NAME, MEM_BIRTH,";
+		sql		+= " ID, PWD, TEL, GENDER, ADDR, HEIGHT, WEIGHT)";
+		sql		+= " VALUES (SEQ_MEM.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
