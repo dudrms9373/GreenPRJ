@@ -405,6 +405,35 @@ public class FitnessDao {
 		}
 		return vo;
 	}
+	//비밀번호 변경
+	public void newPwd(String pwd,String id) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;		
+		String sql ="";
+		
+		conn = DBConn.getInstance();
+		
+		sql  = " UPDATE MEMBER SET pwd = ?";
+		sql  += " WHERE id = ? ";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pwd);
+			pstmt.setString(2, id);
+			
+			pstmt.executeUpdate();			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		
+		}finally {
+			try {
+				if( pstmt != null )  pstmt.close();
+			} catch (SQLException e) {
+			}
+		} 
+	}
 
 	// 예약하기 (결과 메시지 )
 	public String reserve(ReservationVo resVo) {
