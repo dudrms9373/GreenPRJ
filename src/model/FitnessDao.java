@@ -551,5 +551,44 @@ public class FitnessDao {
 		}
 		return outV;
 	}
+	
+		// 예약 변경 메소드
+	public String updateRes(ReservationVo resVo1 ,ReservationVo resVo2) {
+		String result="";
+		
+		
+		removeRes(resVo2.getResMemId()); // 기존 예약 취소
+		reserve(resVo1); // 예약 추가
+			
+	
+		
+		
+		
+		return result;
+		
+	}
+	//회원 번호로 예약 취소하기
+	private void removeRes(int resMemId) {
+		Connection conn = null;
+		PreparedStatement pstmt =null;
+		
+		
+		String sql= "DELETE FROM RESERVATION WHERE MEM_ID= ?";
+		try {
+			conn= DBConn.getInstance();
+			pstmt= conn.prepareStatement(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+			}
+		}	
+	}
+	
+	
+	
 
 }
