@@ -238,8 +238,7 @@ public class TrainerMenu extends JFrame implements ActionListener, MouseListener
 		System.out.println(name + " " + gender + " " + tel + " " + addr + " " + reserved + " " + enough);
 	}
 
-	// JTable 누를때 라벨 청소 ( 처음 누르면 nullpoint error 나옴 )
-	// 초기값을 넣을까...?
+	// JTable 누를때 라벨 청소
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
