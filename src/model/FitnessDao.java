@@ -510,7 +510,7 @@ public class FitnessDao {
 		return result;
 	}
 
-	// PT/상담 내역 추가
+	// PT 내역 추가( sql 에러가 뜨는 걸 보니 괜찮음. 테스트는 reservation에 있는 데이터의 추가가 아니면 안됨)
 	public String writeExe(ExecutionVo exeVo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
