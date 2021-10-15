@@ -128,7 +128,7 @@ public class FitnessDao {
 	}
 
 	// 회원 추가
-	public void JoinFitness(MemberVo MemberVo) {
+	public int JoinFitness(MemberVo MemberVo) {
 		Connection conn;
 		PreparedStatement pstmt = null;
 		String sql = "";
@@ -154,7 +154,14 @@ public class FitnessDao {
 
 			conn.commit();
 
-		} catch (SQLException e) {
+		} catch (SQLIntegrityConstraintViolationException e) {
+			
+			System.out.println("아이디가 중복되었습니다");
+			
+			
+			return -1;
+		}
+		catch (SQLException e) {
 
 			e.printStackTrace();
 		} finally {
@@ -165,6 +172,7 @@ public class FitnessDao {
 				e.printStackTrace();
 			}
 		}
+		return 1;
 	}
 
 	// 남은기간 연장
