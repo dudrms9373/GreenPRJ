@@ -57,34 +57,37 @@ public class FitnessDao {
 
 	}
 
-	// 회원 정보 삭제
-	public void removeMem(String id) {
+	// 회원 정보 삭제 ( 점검 완료)
+	public String removeMem(String id) {
+		String result="삭제에 실패했습니다";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String sql = "DELETE FROM MEMBER WHERE ID = ?";
+		conn = DBConn.getInstance();
+		String sql = "DELETE  FROM  MEMBER ";
+		sql		  += " WHERE ID = ?";
+		
 
 		try {
-			conn = DBConn.getInstance();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			pstmt.executeUpdate();
+			
+			result=id+"계정이 삭제되었습니다";
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (rs != null)
-					rs.close();
 				if (pstmt != null)
 					pstmt.close();
-				if (conn != null)
-					conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
+		return result;
 	}
+
 
 	// 회원조회
 	public Vector MemberList() {
@@ -625,6 +628,49 @@ public class FitnessDao {
 		}	
 	}
 	
+	// 회원 개인 정보 조회( 점검 완료 ) -- 내 정보 창에 나오는 정보 위주
+	public MemberVo getMemInfo(String id) {
+		MemberVo memVo = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql= "SELECT  MEM_NAME, TEL, GENDER, ADDR, HEIGHT, WEIGHT";
+		sql		 += " FROM MEMBER";
+		sql	 	 += " WHERE ID = ?";
+				
+		try {
+			conn  = DBConn.getInstance();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs    = pstmt.executeQuery();
+			if(rs.next()) {
+				String name   = rs.getString("MEM_NAME");
+				String tel    = rs.getString("TEL");
+				String gender = rs.getString("GENDER");
+				String addr   = rs.getString("ADDR");
+				int height    = rs.getInt("HEIGHT");
+				int weight    = rs.getInt("WEIGHT");
+				
+				memVo 		  = new MemberVo(name, tel, gender,
+						addr, height, weight);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+				try {
+					if(rs!=null)rs.close();
+					if(pstmt!=null)pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+		
+		
+		return memVo;
+		
+	}
 	
 	
 
