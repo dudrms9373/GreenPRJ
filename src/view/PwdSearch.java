@@ -88,22 +88,23 @@ public class PwdSearch extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 		case "<이전": dispose(); new UserLoginPage(); break;
-		case "비밀번호 찾기": PwdSearch(); break;
+		case "비밀번호 찾기": PwdSearch1(); break;
 		}
 		
 	}
 
-	private void PwdSearch() {
+	private void PwdSearch1() {
 		FitnessDao fd = new FitnessDao();
 		String name =this.textFieldName.getText();
 		String birth =this.textFieldBirth.getText();
 		String id = this.textFieldId.getText();
 		
-		MemberVo result = fd.PwdSearch(name, birth, id);
+		FitnessVo result = fd.PwdSearch(name, birth, id);
 		if( result != null  ) {
 			JOptionPane.showMessageDialog(null, "비밀번호 찾기 성공");
 			dispose();
-			new PwdSearchResult(result.getName(),result.getPwd()); 
+			new PwdChange(result.getName(),result.getId());
+			
 		}else{
 			JOptionPane.showMessageDialog(null,"조회된 비밀번호가 없습니다","에러 메세지",JOptionPane.OK_OPTION );
 		          // 화면 초기화
