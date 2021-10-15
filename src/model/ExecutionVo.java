@@ -5,14 +5,15 @@ public class ExecutionVo {
 	private String exeNote; //실행 내용
 	private int height; //키
 	private int weight; //몸무게
-	private String exeCheck; //상담 또는 PT
+	private int remainNum; //남은 횟수
 	private int resId; //예약 번호
 	// 생성자
-	public ExecutionVo(String exeNote, int height, int weight, String exeCheck, int resId) {
+	public ExecutionVo(String exeNote, int height, int weight, int remainNum, int resId) {
+		super();
 		this.exeNote = exeNote;
 		this.height = height;
 		this.weight = weight;
-		this.exeCheck = exeCheck;
+		this.remainNum = remainNum;
 		this.resId = resId;
 	}
 	// Getter / Setter
@@ -34,11 +35,11 @@ public class ExecutionVo {
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
-	public String getExeCheck() {
-		return exeCheck;
+	public int getRemainNum() {
+		return remainNum;
 	}
-	public void setExeCheck(String exeCheck) {
-		this.exeCheck = exeCheck;
+	public void setRemainNum(int remainNum) {
+		this.remainNum = remainNum;
 	}
 	public int getResId() {
 		return resId;
@@ -49,8 +50,8 @@ public class ExecutionVo {
 	//toString()
 	@Override
 	public String toString() {
-		return "ExecutionVo [exeNote=" + exeNote + ", height=" + height + ", weight=" + weight + ", exeCheck="
-				+ exeCheck + ", resId=" + resId + "]";
+		return "ExecutionVo [exeNote=" + exeNote + ", height=" + height + ", weight=" + weight + ", remainNum="
+				+ remainNum + ", resId=" + resId + "]";
 	}
 	
 }
