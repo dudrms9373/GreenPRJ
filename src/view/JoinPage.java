@@ -176,10 +176,15 @@ public class JoinPage extends JFrame implements ActionListener{
 				                     TextFieldID.getText(),   TextFieldPWD.getText(), 
 				                     TextFieldTel.getText(), TextFieldGender.getText(), TextFieldAddres.getText(),
 				                     textFieldHeight.getText(),textFieldWeight.getText());
-		fd.JoinFitness(fv);
+		int num = fd.JoinFitness(fv);
 		// 메세지 상자 출력
-	      JOptionPane.showMessageDialog(null,"추가되었습니다","추가",JOptionPane.OK_OPTION
-	            );
+	       if(num == 1) {
+	    	  JOptionPane.showMessageDialog(null,"회원가입 완료","완료",JOptionPane.INFORMATION_MESSAGE);
+	    	  this.dispose(); new UserLoginPage();
+	      }else {
+	    	  JOptionPane.showMessageDialog(null,"아이디가 중복되었습니다","중복",JOptionPane.CANCEL_OPTION);
+	    	  this.TextFieldID.requestFocus();
+	      }
 	      
 		 
 	}
