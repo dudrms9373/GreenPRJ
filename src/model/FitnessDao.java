@@ -576,7 +576,7 @@ public class FitnessDao {
 		
 	}
 	//회원 번호로 예약 취소하기
-	private void removeRes(int resMemId) {
+	public void removeRes(int resMemId) {
 		Connection conn = null;
 		PreparedStatement pstmt =null;
 		
