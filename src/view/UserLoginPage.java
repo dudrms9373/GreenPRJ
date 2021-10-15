@@ -12,8 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import model.FitnessDao;
-import model.FitnessVo;
-import view.JoinPage;
+import model.MemberVo;
 
 public class UserLoginPage extends JFrame implements ActionListener{
 	private JTextField IDtextField;
@@ -102,7 +101,7 @@ public class UserLoginPage extends JFrame implements ActionListener{
 
 	private void login() {
 		FitnessDao fd = new FitnessDao();
-		FitnessVo fv = new FitnessVo();
+		MemberVo fv = new MemberVo();
 		int n = fd.loginCheck(this.IDtextField.getText(), this.PWField.getText());
 		if(n == 1) {
 			fv.setId(this.IDtextField.getText());     

@@ -7,12 +7,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
-import model.FitnessVo;
+import model.MemberVo;
 
 public class PwdSearchResult extends JFrame implements ActionListener{
 	JTextArea IdResulttextArea;
 	JButton LoginGoButton;
-	FitnessVo fv2;
+	MemberVo fv2;
 	public PwdSearchResult(String name, String pwd) {
 		this.setTitle("비밀번호 확인");
 		

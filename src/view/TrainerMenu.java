@@ -272,7 +272,7 @@ public class TrainerMenu extends JFrame implements ActionListener, MouseListener
 
 	}
 
-	public static void main(String[] args) {
-		new TrainerMenu();
-	}
+//	public static void main(String[] args) {
+//		new TrainerMenu();
+//	}
 }

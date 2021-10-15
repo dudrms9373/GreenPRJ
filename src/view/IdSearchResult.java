@@ -1,10 +1,11 @@
 package view;
 
 import javax.swing.JFrame;
+
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
-import model.FitnessVo;
+import model.MemberVo;
 
 import javax.swing.JButton;
 import java.awt.Component;
@@ -14,7 +15,7 @@ import java.awt.event.ActionListener;
 public class IdSearchResult extends JFrame implements ActionListener{
 	JTextArea IdResulttextArea;
 	JButton LoginGoButton;
-	FitnessVo fv2;
+	MemberVo fv2;
 	public IdSearchResult(String name, String id) {
 		this.setTitle("아이디 확인");
 		

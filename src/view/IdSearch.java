@@ -1,18 +1,18 @@
 package view;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import model.FitnessDao;
-import model.FitnessVo;
-
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import model.MemberVo;
 
 public class IdSearch extends JFrame implements ActionListener{
 	private JTextField textFieldName;
@@ -100,7 +100,7 @@ public class IdSearch extends JFrame implements ActionListener{
 		String tel = this.textFieldTel.getText();
 		
 	
-		FitnessVo result = fd.IdSearch(name, birth, tel);
+		MemberVo result = fd.IdSearch(name, birth, tel);
 		if( result != null  ) {
 			JOptionPane.showMessageDialog(null, "아이디 찾기 성공");
 			dispose();

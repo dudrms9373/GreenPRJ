@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import model.FitnessDao;
-import model.FitnessVo;
+import model.MemberVo;
 
 public class PwdSearch extends JFrame implements ActionListener{
 	private JTextField textFieldName;
@@ -99,7 +99,7 @@ public class PwdSearch extends JFrame implements ActionListener{
 		String birth =this.textFieldBirth.getText();
 		String id = this.textFieldId.getText();
 		
-		FitnessVo result = fd.PwdSearch(name, birth, id);
+		MemberVo result = fd.PwdSearch(name, birth, id);
 		if( result != null  ) {
 			JOptionPane.showMessageDialog(null, "비밀번호 찾기 성공");
 			dispose();
