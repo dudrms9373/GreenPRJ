@@ -634,21 +634,42 @@ public class FitnessDao {
 		return outV;
 	}
 	
-		// 예약 변경 메소드
+	// 예약 변경 메소드(update set으로 기존 정보만 변경)
 	public String updateRes(ReservationVo resVo1 ,ReservationVo resVo2) {
-		String result="";
+		String result="예약 변경에 실패하였습니다";
+
+		Connection conn         = null;
+		PreparedStatement pstmt = null;
 		
-		
-		removeRes(resVo2.getResMemId()); // 기존 예약 취소
-		reserve(resVo1); // 예약 추가
+		String sql = "UPDATE RESERVATION";
+		sql       += " SET RES_DATE   = ?,";
+		sql	  	  += " RES_NOTE       = ?,";
+		sql	      += " T_ID 	      = ? ";
+		sql	      += " WHERE RES_DATE = ? ";
+
+		try {
+			conn = DBConn.getInstance();
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setString(1, resVo2.getResDate());
+			pstmt.setString(2, resVo2.getResNote());
+			pstmt.setInt(3, resVo2.getResTId());
+			pstmt.setString(4, resVo1.getResDate());
+			pstmt.executeUpdate();
 			
-	
-		
-		
-		
+			result=resVo2.getResDate()+"로 예약이 변경되었습니다";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if( pstmt != null )  pstmt.close();
+			} catch (SQLException e) {
+			}
+		} 
+
 		return result;
 		
 	}
+	
 	//회원 번호로 예약 취소하기
 	public void removeRes(int resMemId) {
 		Connection conn = null;
