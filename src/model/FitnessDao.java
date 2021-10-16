@@ -801,6 +801,48 @@ public class FitnessDao {
 		
 		return memId;	
 	}
+	
+	// 남은 횟수를 조회하는 메소드
+	public int getRemainNum(String id){
+		
+		int remainNum = 0;
+		
+		Connection conn = null;	
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		int memId = getMemId(id);
+		
+		String sql = "SELECT REMAIN_NUM ";
+		sql		  += " FROM EXECUTION ";
+		sql		  += " WHERE MEM_ID = ? ";
+		
+			conn=DBConn.getInstance();
+			try {
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, memId); 
+				rs = pstmt.executeQuery();
+				
+				if( rs.next() ){
+					remainNum = rs.getInt("REMAIN_NUM");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+					try {
+						if(rs!=null)rs.close();
+						if(pstmt!=null)pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+			}
+		
+		
+		
+		return remainNum;
+		
+	}
+	
 		
 		
 	
