@@ -736,5 +736,73 @@ public class FitnessDao {
 	}
 	
 	
+	//회수 연장 메소드
+	public String addNum(String id, int num){
+		String result = "회수 연장에 실패했습니다";
+		
+		Connection conn = null;	
+		PreparedStatement pstmt = null;
+		
+		int memId = getMemId(id);
+		
+		String sql = "UPDATE EXECUTION";
+		sql		  += " SET REMAIN_NUM = REMAIN_NUM + ?";
+		sql		  += " WHERE MEM_ID = ? ";
+		
+		try {
+			conn=DBConn.getInstance();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			pstmt.setInt(2, memId);
+			pstmt.executeUpdate();
+			
+			result= "회수가 "+num+"회 연장되었습니다";
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	//id를 받아 회원번호를 가져오는 메소드
+	private int getMemId(String id) {
+		int memId = 0;
+		Connection conn = null;	
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT MEM_ID";
+		sql		  += " FROM MEMBER";
+		sql		  += " WHERE ID = ? ";
+		
+		
+			conn=DBConn.getInstance();
+			try {
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				rs = pstmt.executeQuery();
+				
+				if( rs.next() ){
+					memId = rs.getInt("MEM_ID");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+					try {
+						if(rs!=null)rs.close();
+						if(pstmt!=null)pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+			}
+		
+		
+		
+		return memId;	
+	}
+		
+		
+	
 
 }
