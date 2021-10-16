@@ -21,13 +21,14 @@ import javax.swing.table.DefaultTableModel;
 import model.FitnessDao;
 
 public class TrainerMenu extends JFrame implements ActionListener, MouseListener {
+
+	private JTextField textField;
 	JPanel leftpanel, rightpanel;
 	JLabel inName, inGender, inTelLabel, inAddressLabel, inBookLabel, inRemainLabel;
 	JTextArea infoTextArea;
 	JTable table;
 	JScrollPane scrollPane;
 	DefaultTableModel dtm;
-	private JTextField textField;
 	Vector v;
 	Vector column;
 
@@ -38,6 +39,35 @@ public class TrainerMenu extends JFrame implements ActionListener, MouseListener
 		leftpanel.setBounds(0, 0, 356, 651);
 		getContentPane().add(leftpanel);
 		leftpanel.setLayout(null);
+		// 이름
+		inName = new JLabel();
+		inName.setBounds(115, 10, 154, 29);
+		leftpanel.add(inName);
+
+		// 성별
+		inGender = new JLabel();
+		inGender.setBounds(115, 60, 207, 29);
+		leftpanel.add(inGender);
+
+		// 전화번호
+		inTelLabel = new JLabel();
+		inTelLabel.setBounds(117, 110, 205, 29);
+		leftpanel.add(inTelLabel);
+
+		// 주소
+		inAddressLabel = new JLabel();
+		inAddressLabel.setBounds(117, 160, 205, 29);
+		leftpanel.add(inAddressLabel);
+
+		// 예약시간
+		inBookLabel = new JLabel();
+		inBookLabel.setBounds(117, 209, 205, 29);
+		leftpanel.add(inBookLabel);
+
+		// 남은일수
+		inRemainLabel = new JLabel();
+		inRemainLabel.setBounds(117, 260, 205, 29);
+		leftpanel.add(inRemainLabel);
 
 		JLabel NameLabel = new JLabel("회원 이름     : ");
 		NameLabel.setBounds(21, 10, 82, 29);
@@ -162,36 +192,26 @@ public class TrainerMenu extends JFrame implements ActionListener, MouseListener
 	}
 
 	// 회원 정보를 라벨에 넣어서 표시
-	public void getLabel(String name, String gender, String tel, String addr, String reserved, String enough) {
-		// 이름
-		inName = new JLabel(name);
-		inName.setBounds(115, 10, 154, 29);
-		leftpanel.add(inName);
+	public void getLabel(String name, String gender, String tel, 
+			             String addr, String reserved, String enough) {
+		
+				// 이름
+				inName.setText(name);
 
-		// 성별
-		inGender = new JLabel(gender);
-		inGender.setBounds(115, 60, 207, 29);
-		leftpanel.add(inGender);
+				// 성별
+				inGender.setText(gender);
 
-		// 전화번호
-		inTelLabel = new JLabel(tel);
-		inTelLabel.setBounds(117, 110, 205, 29);
-		leftpanel.add(inTelLabel);
+				// 전화번호
+				inTelLabel.setText(tel);
 
-		// 주소
-		inAddressLabel = new JLabel(addr);
-		inAddressLabel.setBounds(117, 160, 205, 29);
-		leftpanel.add(inAddressLabel);
+				// 주소
+				inAddressLabel.setText(addr);
 
-		// 예약시간
-		inBookLabel = new JLabel(reserved);
-		inBookLabel.setBounds(117, 209, 205, 29);
-		leftpanel.add(inBookLabel);
+				// 예약시간
+				inBookLabel.setText(reserved);
 
-		// 남은일수
-		inRemainLabel = new JLabel(enough);
-		inRemainLabel.setBounds(117, 260, 205, 29);
-		leftpanel.add(inRemainLabel);
+				// 남은횟수
+				inRemainLabel.setText(enough);
 
 	}
 
@@ -213,31 +233,39 @@ public class TrainerMenu extends JFrame implements ActionListener, MouseListener
 		// 예약시간
 		inBookLabel.setText("");
 
+
 		// 남은일수
 		inRemainLabel.setText("");
 
+		//특이사항
+		infoTextArea.setText("");
 	}
 
 	// JTable row 클릭했을 때 회원정보 leftPanel에 나오게
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		int r = table.getSelectedRow();
-		int c = table.getSelectedColumn();
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			FitnessDao dao = new FitnessDao();
+			
+			int r = table.getSelectedRow();
+			int c = table.getSelectedColumn();
+			
+			
+			String memid = (String) table.getValueAt(r, 0);
+			String name = (String) table.getValueAt(r, 1);
+			String gender = (String) table.getValueAt(r, 2);
+			String tel = (String) table.getValueAt(r, 3);
+			String addr = (String) table.getValueAt(r, 4);
+			String reserved = (String) table.getValueAt(r, 5);
+			String enough = "30 회";
 
-		String name = (String) table.getValueAt(r, 1); // 클릭한 userid
-		String gender = (String) table.getValueAt(r, 2);
-		String tel = (String) table.getValueAt(r, 3);
-		String addr = (String) table.getValueAt(r, 4);
-		String reserved = (String) table.getValueAt(r, 5);
-		String enough = "30일";
+			leftpanel.repaint();
+			getLabel(name, gender, tel, addr, reserved, enough);
 
-		leftpanel.repaint();
-		getLabel(name, gender, tel, addr, reserved, enough);
+			infoTextArea.setText(dao.specialMem(memid));
 
-		System.out.println(name + " " + gender + " " + tel + " " + addr + " " + reserved + " " + enough);
-	}
-
+			System.out.println(name + " " + gender + " " + tel + " " + addr + " " + reserved + " " + enough);
+		}
 	// JTable 누를때 라벨 청소
 	@Override
 	public void mousePressed(MouseEvent e) {

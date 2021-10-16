@@ -18,6 +18,20 @@ public class MemberVo {
 	public MemberVo() {
 		
 	}
+	
+	
+	
+	
+	//Dao에 getMemInfo에서 사용되는 생성자 -김영근
+	public MemberVo(String height, String weight, String name, String tel, String gender, String address) {
+		
+		this.height = height;
+		this.weight = weight;
+		this.name = name;
+		this.tel = tel;
+		this.gender = gender;
+		this.address = address;
+	}
 
 
 	
@@ -37,10 +51,6 @@ public class MemberVo {
 	}
 
 	// Getter /Setter
-
-
-
-
 	public String getHeight() {
 		return height;
 	}

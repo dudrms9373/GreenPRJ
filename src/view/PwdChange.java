@@ -13,10 +13,13 @@ import javax.swing.JTextField;
 import model.FitnessDao;
 
 public class PwdChange extends JFrame implements ActionListener{
+	
 	JTextArea resultTextArea;
 	JButton loginGoButton;
 	JTextField newPwdTextField;
-	String a ;
+	String a ; // 이거 뭐징.. 필요없으면 지우고, 필요한거면 주석이라도 달아줘요..ㅠㅠ -김영근
+	
+	
 	public PwdChange(String name,String id) {
 		 a= id;
 		this.setTitle("비밀번호 변경");
@@ -26,9 +29,6 @@ public class PwdChange extends JFrame implements ActionListener{
 		resultTextArea = new JTextArea(name +"님 비밀번호를 재설정 하세요.\n 아이디 "+a);
 		resultTextArea.setBounds(86, 23, 267, 49);
 		getContentPane().add(resultTextArea);
-		
-		
-		
 		
 		loginGoButton = new JButton("로그인창으로 가기");
 		loginGoButton.setBounds(137, 175, 181, 49);

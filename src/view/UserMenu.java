@@ -12,6 +12,7 @@ public class UserMenu extends JFrame implements ActionListener{
 	
 	
 	JButton LogoutButton, PTButton, InfoButton, ExtensionButton;
+	
 	public UserMenu(String id) {
 		this.setTitle("4. 회원로그인");
 		

@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -129,6 +130,42 @@ public class FitnessDao {
 		}
 		return outV;
 	}
+	
+	//특이사항 가져오기
+		public String specialMem(String memId) {
+
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			String note = "";
+			String sql = "SELECT SPE_NOTE ";
+			sql += " FROM SPECIAL S ";
+			sql += " WHERE S.MEM_ID = ? ";
+
+			try {
+				conn = DBConn.getInstance();
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setString(1, memId);
+
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					note = rs.getString("SPE_NOTE");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+				} catch (SQLException e) {
+				}
+			}
+			return note;
+		}
+		
 
 	// 회원 추가
 	public int JoinFitness(MemberVo MemberVo) {
@@ -179,7 +216,9 @@ public class FitnessDao {
 		return 1;
 	}
 
-	// 남은기간 연장
+	/* 10/15 Prolong 테이블 삭제함 수정 필요 ( 김영근 )
+	 // 남은기간 연장
+	
 	public void prolong(ProlongVo ProlongVo) {
 
 		Connection conn;
@@ -215,6 +254,8 @@ public class FitnessDao {
 		}
 
 	}
+	*/
+	
 
 	// 로그인
 	public int loginCheck(String id, String pwd) {
@@ -526,7 +567,7 @@ public class FitnessDao {
 			pstmt.setString(1, exeVo.getExeNote());
 			pstmt.setInt(2, exeVo.getHeight());
 			pstmt.setInt(3, exeVo.getWeight());
-			pstmt.setString(4, exeVo.getExeCheck());
+		//	pstmt.setString(4, exeVo.getExeCheck()); 메소드 정의해야함 누가 했징..? -김영근
 			pstmt.setInt(5, exeVo.getResId());
 
 			pstmt.executeUpdate();
@@ -651,11 +692,11 @@ public class FitnessDao {
 				String tel    = rs.getString("TEL");
 				String gender = rs.getString("GENDER");
 				String addr   = rs.getString("ADDR");
-				int height    = rs.getInt("HEIGHT");
-				int weight    = rs.getInt("WEIGHT");
+				String height    = rs.getString("HEIGHT");
+				String weight    = rs.getString("WEIGHT");
 				
-				memVo 		  = new MemberVo(name, tel, gender,
-						addr, height, weight);
+				memVo 		  = new MemberVo(height, weight, name,
+						tel, gender, addr); // 생성자 새로 생성했음 - 김영근
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

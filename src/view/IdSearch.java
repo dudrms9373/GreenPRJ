@@ -15,11 +15,10 @@ import model.FitnessDao;
 import model.MemberVo;
 
 public class IdSearch extends JFrame implements ActionListener{
-	private JTextField textFieldName;
-	private JTextField textFieldBirth;
-	private JTextField textFieldTel;
-	JButton IdSearchButton;
-	JButton backButton;
+	
+	private JTextField textFieldName, textFieldBirth, textFieldTel;
+	JButton IdSearchButton, backButton;
+	
 	public IdSearch() {
 		this.setTitle("아이디 찾기");
 		

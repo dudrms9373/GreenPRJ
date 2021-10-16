@@ -15,10 +15,12 @@ import model.FitnessDao;
 import model.MemberVo;
 
 public class UserLoginPage extends JFrame implements ActionListener{
+	
 	private JTextField IDtextField;
 	JPasswordField PWField;
 	JButton Login_Button, JoinButton, IdSearchButton, PWSearchButton, BackButton;
 	public String idcheck ;
+	
 	public UserLoginPage(){
 		
 		this.setTitle("회원 로그인 화면");
@@ -84,9 +86,10 @@ public class UserLoginPage extends JFrame implements ActionListener{
 		this.setVisible(true);
 
 	}
-	public static void main(String[] args) {
-		new UserLoginPage();
-	}
+	
+//	public static void main(String[] args) {
+//		new UserLoginPage();
+//	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

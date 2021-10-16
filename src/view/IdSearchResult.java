@@ -13,9 +13,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class IdSearchResult extends JFrame implements ActionListener{
+	
 	JTextArea IdResulttextArea;
 	JButton LoginGoButton;
 	MemberVo fv2;
+	
 	public IdSearchResult(String name, String id) {
 		this.setTitle("아이디 확인");
 		
