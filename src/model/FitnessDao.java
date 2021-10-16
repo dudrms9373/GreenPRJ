@@ -556,10 +556,10 @@ public class FitnessDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String result = "실행 내역 추가 실패";
+		String result = "PT 내역 추가 실패";
 
 		String sql = "INSERT INTO EXECUTION(EXE_ID, EXE_NOTE,";
-		sql += " HEIGHT, WEIGHT, EXE_CHECK, RES_ID )";
+		sql += " HEIGHT, WEIGHT, REMAIN_NUM, RES_ID )";
 		sql += " VALUES ( SEQ_EXE.NEXTVAL, ? , ? , ? , ? , ? )";
 		conn = DBConn.getInstance();
 		try {
@@ -567,12 +567,12 @@ public class FitnessDao {
 			pstmt.setString(1, exeVo.getExeNote());
 			pstmt.setInt(2, exeVo.getHeight());
 			pstmt.setInt(3, exeVo.getWeight());
-		//	pstmt.setString(4, exeVo.getExeCheck()); 메소드 정의해야함 누가 했징..? -김영근
+			pstmt.setInt(4, exeVo.getRemainNum());  // 새 테이블에 맞춰 수정됨
 			pstmt.setInt(5, exeVo.getResId());
 
 			pstmt.executeUpdate();
 
-			result = "실행 내역 추가되었습니다.";
+			result = "PT 내역 추가되었습니다.";
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
