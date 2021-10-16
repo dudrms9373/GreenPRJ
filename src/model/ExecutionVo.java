@@ -9,7 +9,6 @@ public class ExecutionVo {
 	private int resId; //예약 번호
 	// 생성자
 	public ExecutionVo(String exeNote, int height, int weight, int remainNum, int resId) {
-		super();
 		this.exeNote = exeNote;
 		this.height = height;
 		this.weight = weight;
