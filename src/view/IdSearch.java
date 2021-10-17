@@ -101,9 +101,12 @@ public class IdSearch extends JFrame implements ActionListener{
 	
 		MemberVo result = fd.IdSearch(name, birth, tel);
 		if( result != null  ) {
-			JOptionPane.showMessageDialog(null, "아이디 찾기 성공");
+			String msg=result.getName()+" 님의 아이디는 "+result.getId()+" 입니다";
+			JOptionPane.showMessageDialog
+						(null, msg, "확인", 
+								JOptionPane.INFORMATION_MESSAGE);
 			dispose();
-			new IdSearchResult(result.getName(),result.getId()); 
+		        new UserLoginPage();
 		}else{
 			JOptionPane.showMessageDialog(null,"조회된 아이디가 없습니다","에러 메세지",JOptionPane.OK_OPTION );
 		          // 화면 초기화
