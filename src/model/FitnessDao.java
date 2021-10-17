@@ -860,6 +860,42 @@ public class FitnessDao {
 		
 	}
 	
+	// 해당 날짜의 예약 상황을 조회하여 값이 존재하면 true 를 반환(조회값은 무엇이라도 상관없음)
+	private boolean getResDate(String date2) {
+		boolean check = false;
+		
+		Connection 		  conn	= null;
+		PreparedStatement pstmt = null;
+		ResultSet		  rs    = null;
+		
+		String sql= "SELECT MEM_ID";
+		sql		 += " FROM RESERVATION";
+		sql		 += " WHERE RES_DATE= ? ";
+		
+		try {
+			conn=DBConn.getInstance();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, date2);
+			rs=pstmt.executeQuery();
+			
+			if( rs.next() ){
+				check = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+				try {
+					if(rs!=null)rs.close();
+					if(pstmt!=null)pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+		
+		return check;
+	}
+	
 		
 		
 	
