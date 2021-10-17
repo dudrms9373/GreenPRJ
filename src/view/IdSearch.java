@@ -18,6 +18,7 @@ public class IdSearch extends JFrame implements ActionListener{
 	
 	private JTextField textFieldName, textFieldBirth, textFieldTel;
 	JButton IdSearchButton, backButton;
+	private boolean check = true;
 	
 	public IdSearch() {
 		this.setTitle("아이디 찾기");
@@ -84,7 +85,11 @@ public class IdSearch extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 		case "<이전":this.dispose(); new UserLoginPage(); break;
-		case "아이디 찾기": IdSearch(); break;
+		case "아이디 찾기": 
+			nullCheck(check);
+			if (check == false) // check로 이름 / 생년월일 / 전번 안적었을때 다이얼로그 1개만 뜨게
+				break;
+			IdSearch(); break;
 		
 		}
 		
@@ -114,6 +119,32 @@ public class IdSearch extends JFrame implements ActionListener{
 		}
 		
 	}
+		// textfield Null인지 아닌지 확인
+	public boolean nullCheck(boolean check) {
+		FitnessDao fd = new FitnessDao();
+		String name = this.textFieldName.getText();
+		String birth = this.textFieldBirth.getText();
+		String tel = this.textFieldTel.getText();
+				
+		if (name.equals("")) {
+			JOptionPane.showMessageDialog(null, "이름을 입력해 주세요.", "에러 메세지", JOptionPane.OK_OPTION);
+			textFieldName.requestFocus(); // 포커스 이동
+		}
+
+		else if (birth.equals("")) {
+			JOptionPane.showMessageDialog(null, "생년월일을 입력 해주세요.", "에러 메세지", JOptionPane.OK_OPTION);
+			textFieldBirth.requestFocus();
+		} else if (tel.equals("")) {
+			JOptionPane.showMessageDialog(null, "전화번호를 입력 해주세요.", "에러 메세지", JOptionPane.OK_OPTION);
+			textFieldTel.requestFocus();
+		}
+		
+		check = false;
+		this.check = check;
+		return check;
+		
+	}
+	
 	public void clearData() {
 		this.textFieldName.setText("");
 		this.textFieldBirth.setText("");
