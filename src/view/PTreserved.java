@@ -173,8 +173,9 @@ public class PTreserved extends JFrame {
 			time=String.format("%02d:00", num);
 			
 			if(e.getActionCommand().equals(time)){
-				String resDate="날짜 박스 getText() "+time; //수정 필요 (미완성)
-				System.out.println(resDate);
+				String date=(String) cbDate.getSelectedItem();
+				String resDate=date+" "+time; //수정 필요 (미완성)
+				//예약 정보를 ....트레이너 밖에 입력할 게 없다는? 회원번호는 추출메소드 사용
 			}
 			
 		}
