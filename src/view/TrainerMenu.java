@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -25,12 +26,12 @@ public class TrainerMenu extends JFrame implements ActionListener, MouseListener
 	private JTextField textField;
 	JPanel leftpanel, rightpanel;
 	JLabel inName, inGender, inTelLabel, inAddressLabel, inBookLabel, inRemainLabel;
-	JTextArea infoTextArea;
 	JTable table;
 	JScrollPane scrollPane;
 	DefaultTableModel dtm;
 	Vector v;
 	Vector column;
+	JTextArea specTextArea,PtTextArea;
 
 	public TrainerMenu() {
 		this.setTitle("트레이너 화면");
@@ -40,66 +41,59 @@ public class TrainerMenu extends JFrame implements ActionListener, MouseListener
 		getContentPane().add(leftpanel);
 		leftpanel.setLayout(null);
 		// 이름
-		inName = new JLabel();
-		inName.setBounds(115, 10, 154, 29);
+		inName = new JLabel("사용자 이름 넣는곳");
+		inName.setBounds(121, 22, 207, 29);
 		leftpanel.add(inName);
 
 		// 성별
-		inGender = new JLabel();
-		inGender.setBounds(115, 60, 207, 29);
+		inGender = new JLabel("성별 들어갈곳");
+		inGender.setBounds(121, 72, 207, 29);
 		leftpanel.add(inGender);
 
 		// 전화번호
-		inTelLabel = new JLabel();
-		inTelLabel.setBounds(117, 110, 205, 29);
+		inTelLabel = new JLabel("전화 번호 넣는곳");
+		inTelLabel.setBounds(123, 122, 205, 29);
 		leftpanel.add(inTelLabel);
 
 		// 주소
-		inAddressLabel = new JLabel();
-		inAddressLabel.setBounds(117, 160, 205, 29);
+		inAddressLabel = new JLabel("부산 광역시 대연동");
+		inAddressLabel.setToolTipText(inAddressLabel.getText());
+		inAddressLabel.setBounds(123, 172, 205, 29);
 		leftpanel.add(inAddressLabel);
 
 		// 예약시간
-		inBookLabel = new JLabel();
-		inBookLabel.setBounds(117, 209, 205, 29);
+		inBookLabel = new JLabel("예약시간 넣는곳");
+		inBookLabel.setBounds(123, 222, 205, 29);
 		leftpanel.add(inBookLabel);
 
 		// 남은일수
-		inRemainLabel = new JLabel();
-		inRemainLabel.setBounds(117, 260, 205, 29);
+		inRemainLabel = new JLabel("남은 일 수 넣는곳");
+		inRemainLabel.setBounds(123, 272, 205, 29);
 		leftpanel.add(inRemainLabel);
 
 		JLabel NameLabel = new JLabel("회원 이름     : ");
-		NameLabel.setBounds(21, 10, 82, 29);
+		NameLabel.setBounds(20, 22, 82, 29);
 		leftpanel.add(NameLabel);
 
 		JLabel genderLabel = new JLabel("성별              : ");
-		genderLabel.setBounds(21, 60, 82, 29);
+		genderLabel.setBounds(20, 72, 82, 29);
 		leftpanel.add(genderLabel);
 
 		JLabel telLabel = new JLabel("전화번호      :");
-		telLabel.setBounds(21, 110, 82, 29);
+		telLabel.setBounds(20, 122, 82, 29);
 		leftpanel.add(telLabel);
 
 		JLabel addressLabel = new JLabel("주소              : ");
-		addressLabel.setBounds(21, 160, 82, 29);
+		addressLabel.setBounds(20, 172, 82, 29);
 		leftpanel.add(addressLabel);
 
 		JLabel bookLabel = new JLabel("예약 시간     : ");
-		bookLabel.setBounds(21, 210, 82, 29);
+		bookLabel.setBounds(20, 222, 82, 29);
 		leftpanel.add(bookLabel);
 
 		JLabel remainLabel = new JLabel("남은 일 수    :");
-		remainLabel.setBounds(21, 260, 82, 29);
+		remainLabel.setBounds(20, 272, 82, 29);
 		leftpanel.add(remainLabel);
-
-		JLabel infoLabel = new JLabel("회원 특이사항");
-		infoLabel.setBounds(21, 333, 102, 25);
-		leftpanel.add(infoLabel);
-
-		infoTextArea = new JTextArea();
-		infoTextArea.setBounds(21, 368, 323, 234);
-		leftpanel.add(infoTextArea);
 
 		JButton btnNewButton_2 = new JButton("수정");
 		btnNewButton_2.setBounds(143, 616, 82, 29);
@@ -123,6 +117,18 @@ public class TrainerMenu extends JFrame implements ActionListener, MouseListener
 		btnNewButton.setBounds(340, 24, 91, 29);
 		rightpanel.add(btnNewButton);
 
+		//JScrollPane
+				specTextArea= new JTextArea();
+				PtTextArea = new JTextArea();
+				JScrollPane spScroll = new JScrollPane(specTextArea);
+				JScrollPane ptScroll = new JScrollPane(PtTextArea);
+				JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+				tabbedPane.setBounds(14, 338, 340, 260);
+				leftpanel.add(tabbedPane);
+				
+				tabbedPane.addTab("특이사항", spScroll );
+				tabbedPane.addTab("PT 내역", ptScroll );
+				
 		dtm = new DefaultTableModel(column, 1);
 
 		table = new JTable();
@@ -238,7 +244,10 @@ public class TrainerMenu extends JFrame implements ActionListener, MouseListener
 		inRemainLabel.setText("");
 
 		//특이사항
-		infoTextArea.setText("");
+		specTextArea.setText("");
+		
+		//PT내역
+		PtTextArea.setText("");
 	}
 
 	// JTable row 클릭했을 때 회원정보 leftPanel에 나오게
@@ -262,7 +271,11 @@ public class TrainerMenu extends JFrame implements ActionListener, MouseListener
 			leftpanel.repaint();
 			getLabel(name, gender, tel, addr, reserved, enough);
 
-			infoTextArea.setText(dao.specialMem(memid));
+			//특이사항 메소드 연결
+			specTextArea.setText(dao.specialMem(memid));
+			
+			//PT 내역사항 메소드랑 연결해야함!!!! --  2021.10.17
+			//PtTextArea.setText();
 
 			System.out.println(name + " " + gender + " " + tel + " " + addr + " " + reserved + " " + enough);
 		}
@@ -299,7 +312,7 @@ public class TrainerMenu extends JFrame implements ActionListener, MouseListener
 
 	}
 
-//	public static void main(String[] args) {
-//		new TrainerMenu();
-//	}
+	public static void main(String[] args) {
+		new TrainerMenu();
+	}
 }
