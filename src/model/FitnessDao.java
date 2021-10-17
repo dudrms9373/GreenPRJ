@@ -896,6 +896,62 @@ public class FitnessDao {
 		return check;
 	}
 	
+	//시간 버튼의 상태를 변경(파랑 활성)  -자신이 예약함 콤보 박스의 날짜필요(인자 추가 필요)
+	public ArrayList<JButton> getMyRes(String date,String id,ArrayList<JButton> btnSet) {
+		for (JButton jBtn : btnSet) {
+			String time = jBtn.getText();
+			String date2=date+" "+time;
+			int memId=getMemId(id); //회원번호 조회 메소드
+			boolean check = getMemRes(memId,date2); // 조회자료 존재 시 true 반환
+			
+			if(check){
+				jBtn.setEnabled(true);
+				jBtn.setBackground(Color.CYAN);
+			}
+		}
+		
+		return btnSet;
+	}
+	
+	//회원번호와 날짜를 인자로 받아 조회값이 존재할 경우 true를 반환
+	private boolean getMemRes(int memId, String date2) {
+		boolean check=false;
+		
+		Connection 		  conn	= null;
+		PreparedStatement pstmt = null;
+		ResultSet		  rs    = null;
+		
+		String sql= "SELECT T_ID ";
+		sql		 += " FROM RESERVATION ";
+		sql		 += " WHERE MEM_ID = ? ";
+		sql		 += " AND RES_DATE = ? ";
+		
+		try {
+			conn=DBConn.getInstance();
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, memId);
+			pstmt.setString(2, date2);
+			rs=pstmt.executeQuery();
+			
+			if( rs.next() ){
+				check = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+				try {
+					if(rs!=null)rs.close();
+					if(pstmt!=null)pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+		
+		
+		return check;
+	}
+	
 		
 		
 	
