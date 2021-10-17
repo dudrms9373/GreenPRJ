@@ -20,6 +20,7 @@ public class PwdSearch extends JFrame implements ActionListener{
 	private JTextField textFieldId;
 	JButton backButton;
 	JButton IdSearchButton;
+	private boolean check = true;
 
 	public PwdSearch() {
 		this.setTitle("비밀번호 찾기");
@@ -88,9 +89,39 @@ public class PwdSearch extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 		case "<이전": dispose(); new UserLoginPage(); break;
-		case "비밀번호 찾기": PwdSearch1(); break;
+		case "비밀번호 찾기": 
+		nullCheck(check);
+			if (check == false)
+				break;
+		PwdSearch1(); break;
 		}
 		
+	}
+	
+	//널 값 체크하는 메소드
+	public boolean nullCheck(boolean check) {
+		FitnessDao fd = new FitnessDao();
+		String name = this.textFieldName.getText();
+		String birth = this.textFieldBirth.getText();
+		String id = this.textFieldId.getText();
+
+		if (name.equals("")) {
+			JOptionPane.showMessageDialog(null, "이름을 입력해 주세요.", "에러 메세지", JOptionPane.OK_OPTION);
+			textFieldName.requestFocus(); // 포커스 이동
+		}
+
+		else if (birth.equals("")) {
+			JOptionPane.showMessageDialog(null, "생년월일을 입력 해주세요.", "에러 메세지", JOptionPane.OK_OPTION);
+			textFieldBirth.requestFocus();
+		} else if (id.equals("")) {
+			JOptionPane.showMessageDialog(null, "ID를 입력 해주세요.", "에러 메세지", JOptionPane.OK_OPTION);
+			textFieldId.requestFocus();
+		}
+
+		check = false;
+		this.check = check;
+		return check;
+
 	}
 
 	private void PwdSearch1() {
