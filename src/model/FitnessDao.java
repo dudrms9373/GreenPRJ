@@ -643,17 +643,15 @@ public class FitnessDao {
 		
 		String sql = "UPDATE RESERVATION";
 		sql       += " SET RES_DATE   = ?,";
-		sql	  	  += " RES_NOTE       = ?,";
-		sql	      += " T_ID 	      = ? ";
-		sql	      += " WHERE RES_DATE = ? ";
+		sql	  += " T_ID 	      = ? ";
+		sql	  += " WHERE RES_DATE = ? ";
 
 		try {
 			conn = DBConn.getInstance();
 			pstmt= conn.prepareStatement(sql);
 			pstmt.setString(1, resVo2.getResDate());
-			pstmt.setString(2, resVo2.getResNote());
-			pstmt.setInt(3, resVo2.getResTId());
-			pstmt.setString(4, resVo1.getResDate());
+			pstmt.setInt(2, resVo2.getResTId());
+			pstmt.setString(3, resVo1.getResDate());
 			pstmt.executeUpdate();
 			
 			result=resVo2.getResDate()+"로 예약이 변경되었습니다";
