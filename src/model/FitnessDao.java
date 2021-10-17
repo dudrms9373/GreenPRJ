@@ -843,6 +843,23 @@ public class FitnessDao {
 		
 	}
 	
+	//시간 버튼의 상태를 변경(빨강 비활성)
+	public ArrayList<JButton> getBtn(String date,ArrayList<JButton> btnSet) {
+		for (JButton jBtn : btnSet) {
+			String time = jBtn.getText();
+			String date2=date+" "+time;
+			boolean check = getResDate(date2); // 조회자료 존재 시 true 반환
+			
+			if(check){
+				jBtn.setEnabled(false);
+				jBtn.setBackground(Color.RED);
+			}
+		}
+		
+		return btnSet;
+		
+	}
+	
 		
 		
 	
