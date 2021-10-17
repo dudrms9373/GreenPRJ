@@ -12,7 +12,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class IdSearchResult extends JFrame implements ActionListener{
+public class IdSearchResult extends JFrame implements ActionListener{ // 삭제 
 	
 	JTextArea IdResulttextArea;
 	JButton LoginGoButton;
