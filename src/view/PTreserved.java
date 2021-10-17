@@ -140,7 +140,12 @@ public class PTreserved extends JFrame {
 			jBtn.setBackground(Color.GREEN);
 		}
 		
+		//ArrayList를 던져 현재 예약상황에 맞는 버튼 상태로 변경
+		fDao = new FitnessDao();
+		btnSet=fDao.getBtn((String) cbDate.getSelectedItem(),btnSet);
 		
+		//ArrayList를 던져 현재 자신이 예약한 시간 버튼의 상태를 변경
+		btnSet=fDao.getMyRes((String) cbDate.getSelectedItem(),id,btnSet);
 		
 		
 		
