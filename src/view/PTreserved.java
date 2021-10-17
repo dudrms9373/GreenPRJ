@@ -19,6 +19,8 @@ import java.awt.Insets;
 public class PTreserved extends JFrame {
 
 	JLabel lblReserved, lblAM, lblPM;
+	
+	JComboBox<String> cbDate;
 
 	JButton JBpreview, JB9h, JB10h, JB11h, JB12h, JB13h, JB14h, JB15h, JB16h, 
 	        JB17h, JB18h, JB19h, JB20h;
