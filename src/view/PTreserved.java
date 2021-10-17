@@ -28,7 +28,7 @@ public class PTreserved extends JFrame {
 		//Label~
 		lblReserved = new JLabel("PT 예약");
 		lblReserved.setFont(new Font("맑은 고딕", Font.BOLD, 30));
-		lblReserved.setBounds(215, 10, 223, 39);
+		lblReserved.setBounds(160, 10, 400, 39); // 좌표 변경
 		getContentPane().add(lblReserved);
 
 		lblAM = new JLabel("오전");
@@ -42,6 +42,27 @@ public class PTreserved extends JFrame {
 		lblPM.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPM.setBounds(27, 248, 95, 120);
 		getContentPane().add(lblPM);
+		
+		
+		//오늘을 포함한 8일이 포함된 콤보박스 작성
+		Calendar today= Calendar.getInstance();
+		int year=today.get(Calendar.YEAR);
+		int month=today.get(Calendar.MONTH);
+		int date=today.get(Calendar.DATE);
+		String fmt="%4d-%02d-%02d";
+		String[] days=new String[8];
+		
+		for(int i=0 ; i<days.length ; i++){
+			String day = String.format(fmt,year,month+1,date+i);
+			days[i]=day;
+			
+		}
+		
+		cbDate=new JComboBox<>(days);
+		cbDate.setBounds(400, 50, 150, 20);
+		getContentPane().add(cbDate);
+		//오늘의 예약 일정 표시(default)
+		lblReserved.setText((String) cbDate.getSelectedItem()+" 예약 일정");
 
 		
 		//버튼들 9~20시
@@ -124,24 +145,18 @@ public class PTreserved extends JFrame {
 		
 		
 		// ActionListener에 버튼 등록
+		///날짜 콤보 박스
+		this.cbDate.addActionListener(this);
 		///이전 버튼 
 		this.JBpreview.addActionListener(this);;
 		///시간 버튼
-		this.JB9h.addActionListener(this);
-		this.JB10h.addActionListener(this);
-		this.JB11h.addActionListener(this);
-		this.JB12h.addActionListener(this);
-		this.JB13h.addActionListener(this);
-		this.JB14h.addActionListener(this);
-		this.JB15h.addActionListener(this);
-		this.JB16h.addActionListener(this);
-		this.JB17h.addActionListener(this);
-		this.JB18h.addActionListener(this);
-		this.JB19h.addActionListener(this);
-		this.JB20h.addActionListener(this);
+		for (JButton jBtn : btnSet) {
+			jBtn.addActionListener(this);
+		}
 
 		this.setSize(600, 500);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null); //중앙에 열리도록 조정
 		this.setVisible(true);
 
 	}
@@ -164,7 +179,8 @@ public class PTreserved extends JFrame {
 			
 		}
 		
-		
+		//콤보 박스의 날짜를 선택할 때마다 레이블의 텍스트 변경
+		lblReserved.setText((String) cbDate.getSelectedItem()+" 예약 일정");
 	}
 
 
