@@ -1040,6 +1040,94 @@ public class FitnessDao {
 		}
 	
 		
+		// 로그인
+		public Boolean loginCheck(String id, String pwd) {
+			
+			Boolean check 			= false;
+			
+			Connection conn		    = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs		    = null;
+			MemberVo vo 		    = new MemberVo();
+			String sql			    = "";
+
+
+			sql = "SELECT * FROM MEMBER";
+			sql += " WHERE ID = ? ";
+			sql += " AND   PWD = ? ";
+
+			try {
+				conn = DBConn.getInstance();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.setString(2, pwd);
+
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					JOptionPane.showMessageDialog(null, getName(id) + "님 로그인 성공");
+					check = true;
+				} else {
+					JOptionPane.showMessageDialog(null, "아이디나 비밀번호가 일치하지 않습니다");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+				} catch (SQLException e) {
+				}
+			}
+			return check;
+		}
+		
+		//트레이너 로그인
+		public boolean trainerlogin(String id, String pwd) {
+			boolean check=false;
+			Connection conn		    = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs		    = null;
+			MemberVo vo 		    = new MemberVo();
+			String sql			    = "";
+
+
+			sql = "SELECT T_NAME FROM TRAINER";
+			sql += " WHERE ID = ? ";
+			sql += " AND   PWD = ? ";
+
+			try {
+				conn = DBConn.getInstance();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.setString(2, pwd);
+
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					JOptionPane.showMessageDialog(null, getName(id) + "님 로그인 성공");
+					check = true;
+				} else {
+					JOptionPane.showMessageDialog(null, "아이디나 비밀번호가 일치하지 않습니다");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (rs != null)
+						rs.close();
+					if (pstmt != null)
+						pstmt.close();
+				} catch (SQLException e) {
+				}
+			}
+			
+			
+			
+			return check;
+		}
 		
 	
 
