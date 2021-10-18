@@ -31,11 +31,11 @@ public class LoginPage extends JFrame implements ActionListener{
 		
 		
 		
-		JLabel lblNewLabel = new JLabel("로그인");
-		lblNewLabel.setBounds(127, 21, 266, 27);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 23));
-		getContentPane().add(lblNewLabel);
+		JLabel loginLabel = new JLabel("로그인");
+		loginLabel.setBounds(127, 21, 266, 27);
+		loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		loginLabel.setFont(new Font("굴림", Font.BOLD, 23));
+		getContentPane().add(loginLabel);
 		
 		JLabel Label_ID = new JLabel("ID : ");
 		Label_ID.setHorizontalAlignment(SwingConstants.CENTER);
