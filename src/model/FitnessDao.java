@@ -1,14 +1,18 @@
 package model;
 
+import java.awt.Color;
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+
+
 
 public class FitnessDao {
 	static String n1 = "";
@@ -188,8 +192,8 @@ public class FitnessDao {
 			pstmt.setString(5, MemberVo.getTel());
 			pstmt.setString(6, MemberVo.getGender());
 			pstmt.setString(7, MemberVo.getAddress());
-			pstmt.setString(8, MemberVo.getHeight());
-			pstmt.setString(9, MemberVo.getWeight());
+			pstmt.setInt(8, MemberVo.getHeight());
+			pstmt.setInt(9, MemberVo.getWeight());
 
 			pstmt.executeUpdate();
 
@@ -376,10 +380,10 @@ public class FitnessDao {
 				String tel1 = rs.getString(6);
 				String gender = rs.getString(7);
 				String address = rs.getString(8);
-				String height = rs.getString(9);
-				String weight = rs.getString(10);
+				int height = rs.getInt(9);
+				int weight = rs.getInt(10);
 
-				vo = new MemberVo(name1, birth1, id, pwd, tel1, gender, address, height, weight);
+				vo = new MemberVo(height, weight,name1, birth1, id, pwd, tel1, gender, address );
 
 			}
 		} catch (SQLException e) {
@@ -430,10 +434,10 @@ public class FitnessDao {
 				String tel1 = rs.getString(6);
 				String gender = rs.getString(7);
 				String address = rs.getString(8);
-				String height = rs.getString(9);
-				String weight = rs.getString(10);
+				int height = rs.getInt(9);
+				int weight = rs.getInt(10);
 
-				vo = new MemberVo(name1, birth1, id1, pwd, tel1, gender, address, height, weight);
+				vo = new MemberVo(height, weight,name1, birth1, id1, pwd, tel1, gender, address );
 
 			}
 		} catch (SQLException e) {
@@ -706,28 +710,36 @@ public class FitnessDao {
 		String sql = "SELECT  M.MEM_NAME, M.TEL, M.GENDER, M.ADDR, M.HEIGHT, M.WEIGHT, MEM_BIRTH, E.REMAIN_NUM, R.RES_DATE";
 		sql += " FROM MEMBER M, RESERVATION R, EXECUTION E";
 		sql += " WHERE M.MEM_ID = R.MEM_ID AND R.RES_ID = E.RES_ID";
+		sql += " AND M.ID = ? ";
 
 		try {
 			conn = DBConn.getInstance();
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
+			
 			if (rs.next()) {
+				
+				String name = rs.getString(1);
+				String tel = rs.getString(2);
+				String gender = rs.getString(3);
+				String addr = rs.getString(4);
+				int height = rs.getInt(5);
+				int weight = rs.getInt(6);
+				String birth = rs.getString(7);
+				int remainNum = rs.getInt(8);
+				String ptTime = rs.getString(9);
 
-				String name = rs.getString("MEM_NAME");
-				String tel = rs.getString("TEL");
-				String gender = rs.getString("GENDER");
-				String addr = rs.getString("ADDR");
-				String height = rs.getString("HEIGHT");
-				String weight = rs.getString("WEIGHT");
-				String birth = rs.getString("MEM_BIRTH");
-				String remainNum = rs.getString("REMAIN_NUM");
-				String ptTime = rs.getString("RES_DATE");
+				memVo = new MemberVo(height, weight,id, name,birth, 
+						tel, gender, addr,
+						remainNum, ptTime); // 생성자 새로 생성했음 - 김영근
 
-				memVo = new MemberVo(height, weight, name, birth, tel, 
-						gender, addr, remainNum, ptTime); // 생성자 새로 생성했음 - 김영근
-
+				
 				return memVo;
+				
 			}
+			
+			System.out.println(memVo);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -853,7 +865,6 @@ public class FitnessDao {
 	}
 	
 	//시간 버튼의 상태를 변경(빨강 비활성)
-	
 		public ArrayList<JButton> getBtn(String date,ArrayList<JButton> btnSet) {
 		for (JButton jBtn : btnSet) {
 			String time = jBtn.getText();
@@ -1041,7 +1052,7 @@ public class FitnessDao {
 	
 		
 		// 로그인
-		public Boolean loginCheck(String id, String pwd) {
+		public Boolean loginCheck1(String id, String pwd) {
 			
 			Boolean check 			= false;
 			
