@@ -235,8 +235,23 @@ public class PTreserved extends JFrame {
 						if(ans==0){
 							memId = fDao.getMemId(id);
 							tId   = fDao.getTId(tName);
-							resVo=new ReservationVo(resDate, memId, tId);
-							fDao.reserve(resVo);
+							boolean check=fDao.reserve(resVo);
+							if(check){
+								JOptionPane.showMessageDialog
+										(null,
+										  resDate+"\n 예약되었습니다"
+										  ,"예약 확인"
+										  ,JOptionPane.OK_OPTION);
+							}
+							else{
+								JOptionPane.showMessageDialog
+								(null,
+								  "예약에 실패했습니다"
+								  ,"오류"
+								  ,JOptionPane.OK_OPTION);
+							}
+							
+							
 							refresh();
 						}	
 					}
