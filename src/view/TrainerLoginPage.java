@@ -17,7 +17,7 @@ public class TrainerLoginPage extends JFrame {
 		this.setSize(445,290);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
-		this.setVisible(true);
+		
 		
 		JLabel Title_Label = new JLabel("관리자 ID와 PWD로 로그인 하세요");
 		Title_Label.setFont(new Font("굴림", Font.BOLD, 21));
@@ -53,6 +53,8 @@ public class TrainerLoginPage extends JFrame {
 		Cancel_Button.setFont(new Font("굴림", Font.PLAIN, 15));
 		Cancel_Button.setBounds(263, 183, 81, 30);
 		getContentPane().add(Cancel_Button);
+		
+		this.setVisible(true);
 	
 	}
 
