@@ -242,12 +242,23 @@ public class PTreserved extends JFrame {
 					}
 					else
 						if(col==Color.BLUE){ //기존 예약을 취소할 경우
-							fDao.removeRes(resDate,memId);
+							boolean check=fDao.removeRes(resDate,memId);
 							refresh();
-				}
-				
-					
-				
+							if(check){
+								JOptionPane.showMessageDialog
+										(null,
+										  resDate+"\n 예약이 취소되었습니다"
+										  ,"예약 취소 확인"
+										  ,JOptionPane.OK_OPTION);
+							}
+							else{
+								JOptionPane.showMessageDialog
+								(null,
+								  "예약 취소에 실패했습니다"
+								  ,"오류"
+								  ,JOptionPane.OK_OPTION);
+							}
+						}
 			}
 		}
 		
