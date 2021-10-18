@@ -703,8 +703,8 @@ public class FitnessDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		String sql = "SELECT  M.MEM_NAME, M.TEL, M.GENDER, M.ADDR, M.HEIGHT, M.WEIGHT, MEM_BIRTH, E.REAMIN_NUM, R.RES_DATE";
-		sql += " FROM MEMBER M, RESERVATION R, EXCUTION E";
+		String sql = "SELECT  M.MEM_NAME, M.TEL, M.GENDER, M.ADDR, M.HEIGHT, M.WEIGHT, MEM_BIRTH, E.REMAIN_NUM, R.RES_DATE";
+		sql += " FROM MEMBER M, RESERVATION R, EXECUTION E";
 		sql += " WHERE M.MEM_ID = R.MEM_ID AND R.RES_ID = E.RES_ID";
 
 		try {
