@@ -43,6 +43,9 @@ public class UserMenu extends JFrame implements ActionListener{
 		getContentPane().setLayout(null);
 		
 		this.LogoutButton.addActionListener(this);
+		this.InfoButton.addActionListener(this);
+		this.PTButton.addActionListener(this);
+		this.ExtensionButton.addActionListener(this);
 		
 		
 		this.setVisible(true);
