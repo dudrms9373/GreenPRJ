@@ -180,8 +180,17 @@ public class MyInfo extends JFrame implements ActionListener {
 			new UserMenu(name, id);
 			break;
 		case "회원탈퇴":
-			new UserFire(id);
-			break;
+			int result = JOptionPane.showConfirmDialog
+						(null,
+						"정말 탈퇴하시겠습니까?"
+						,"탈퇴 확인"
+						,JOptionPane.OK_CANCEL_OPTION);
+						if(result==JOptionPane.OK_OPTION){
+							fDao.removeMem(id); new LoginPage(); break;
+						}
+						else(result==JOPtionPane.CANCEL_OPTION){
+							break;	
+						}
 		case "연장하기":
 			new PTPrice(id);
 			break;
