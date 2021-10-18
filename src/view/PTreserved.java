@@ -181,8 +181,21 @@ public class PTreserved extends JFrame {
 			
 			if(e.getActionCommand().equals(time)){
 				String date=(String) cbDate.getSelectedItem();
-				String resDate=date+" "+time; //수정 필요 (미완성)
-				//예약 정보를 ....트레이너 밖에 입력할 게 없다는? 회원번호는 추출메소드 사용
+				String resDate=date+" "+time; 
+				
+				int ans = JOptionPane.showOptionDialog(null, resDate+"\n예약하시겠습니까?",
+						"PT 예약 확인",
+						JOptionPane.YES_NO_CANCEL_OPTION,
+					    JOptionPane.INFORMATION_MESSAGE,
+					    null,
+					    answer,
+					    answer[1]);
+				if(ans==0){
+					memId = fDao.getMemId(id);
+					tId   = fDao.getTId(tName);
+					resVo=new ReservationVo(resDate, memId, tId);
+					fDao.reserve(resVo);
+				}
 			}
 			
 		}
