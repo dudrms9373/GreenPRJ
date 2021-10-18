@@ -18,10 +18,11 @@ public class PTPrice extends JFrame implements ActionListener{
 	JRadioButton w6,w15,w24,w36;
 	ButtonGroup bg;
 	private String id = "";
+	FitnessDao fDao;
 
-	public PTPrice(String id) {
+	public PTPrice(String id2) {
 		
-		this.id = id;
+		this.id = id2;
 		this.setTitle("남은 기간 연장");
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -99,7 +100,8 @@ public class PTPrice extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int num ;
+		fDao = new FitnessDao();
+		int num = 0 ;
 		if( e.getActionCommand().equals("500,000원") ) {
 		System.out.println("PT 10회");
 		num = 10;
@@ -118,6 +120,16 @@ public class PTPrice extends JFrame implements ActionListener{
 		}else {
 			JOptionPane.showMessageDialog(null, "선택해주세요");
 		}
+		if(num==0){
+			
+		}
+		else
+			if(num!=0){
+				fDao.addNum(id,num);
+				dispose();
+				new MyInfo(id);
+			}
+		
 			
 	}
 }
