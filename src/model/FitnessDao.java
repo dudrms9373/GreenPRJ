@@ -1003,6 +1003,43 @@ public class FitnessDao {
 		
 		return tId;
 	}
+		
+	//id로 이름 조회
+		public String getName(String id){
+			String name=null;
+			
+			Connection 		  conn	= null;
+			PreparedStatement pstmt = null;
+			ResultSet		  rs    = null;
+			
+			String sql  = "SELECT MEM_NAME";
+			sql		   += " FROM MEMBER";
+			sql		   += " WHERE ID = ? ";
+			
+			try {
+				conn=DBConn.getInstance();
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				rs=pstmt.executeQuery();
+				
+				if( rs.next() ){
+					name = rs.getString("MEM_NAME");
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+					try {
+						if(rs!=null)rs.close();
+						if(pstmt!=null)pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+			}
+			
+			return name;
+			
+		}
 	
 		
 		
