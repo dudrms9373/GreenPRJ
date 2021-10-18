@@ -3,8 +3,8 @@ package model;
 public class MemberVo {
 
 	// 필드
-	private String height;
-	private String weight;
+	private int height;
+	private int weight;
 	private String name;
 	private String birth;
 	private String id;
@@ -13,7 +13,7 @@ public class MemberVo {
 	private String gender;
 	private String address;
 	private String ptTime;
-	private String remainNum;
+	private int remainNum;
 
 	// 생성자
 	
@@ -22,10 +22,8 @@ public class MemberVo {
 	}
 	
 	
-	
-	
 	//Dao에 getMemInfo에서 사용되는 생성자 -김영근
-	public MemberVo(String height, String weight, String name, String tel, String gender, String address) {
+	public MemberVo(int height, int weight, String name, String tel, String gender, String address) {
 		
 		this.height = height;
 		this.weight = weight;
@@ -37,7 +35,7 @@ public class MemberVo {
 
 
 	
-	public MemberVo( String height, String weight, 
+	public MemberVo( int height, int weight, 
 			String name, String birth, String id, String pwd,
 			String tel, String gender, String address) {
 
@@ -51,9 +49,11 @@ public class MemberVo {
 		this.gender = gender;
 		this.address = address;
 	}
-	public MemberVo(String height, String weight,String id, String name, String birth, 
+
+	//내정보 생성자
+	public MemberVo(int height, int weight,String id, String name, String birth, 
 			String tel, String gender, String address,
-			String remainNum, String ptTime) {
+			int remainNum, String ptTime) {
 		
 		this.id = id;
 		this.height = height;
@@ -66,20 +66,21 @@ public class MemberVo {
 		this.remainNum = remainNum;
 		this.ptTime = ptTime;
 	}
+	
 	// Getter /Setter
-	public String getHeight() {
+	public int getHeight() {
 		return height;
 	}
 
-	public void setHeight(String height) {
+	public void setHeight(int height) {
 		this.height = height;
 	}
 
-	public String getWeight() {
+	public int getWeight() {
 		return weight;
 	}
 
-	public void setWeight(String weight) {
+	public void setWeight(int weight) {
 		this.weight = weight;
 	}
 
@@ -147,6 +148,34 @@ public class MemberVo {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	public String getPtTime() {
+		return ptTime;
+	}
+
+
+
+
+	public void setPtTime(String ptTime) {
+		this.ptTime = ptTime;
+	}
+
+
+
+
+	public int getRemainNum() {
+		return remainNum;
+	}
+
+
+
+
+	public void setRemainNum(int remainNum) {
+		this.remainNum = remainNum;
+	}
+
+
+
 
 	// toString
 	@Override
