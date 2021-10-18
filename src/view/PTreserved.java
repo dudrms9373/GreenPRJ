@@ -222,6 +222,7 @@ public class PTreserved extends JFrame {
 				String resDate=date+" "+time; 
 				
 				String[] answer = {"예약", "취소"};
+				String[] cancel = {"예약취소", "닫기"};
 					
 					if(col==Color.GREEN){ //예약이 가능한 경우
 						
