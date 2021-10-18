@@ -17,15 +17,27 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 public class PTreserved extends JFrame {
+	String id;
+	String aDate, tName;
+	int memId, tId;
 
 	JLabel lblReserved, lblAM, lblPM;
 	
 	JComboBox<String> cbDate;
+	JComboBox<String> cbTrainers;
 
 	JButton JBpreview, JB9h, JB10h, JB11h, JB12h, JB13h, JB14h, JB15h, JB16h, 
 	        JB17h, JB18h, JB19h, JB20h;
+	
+	FitnessDao fDao;
+	
+	ArrayList<JButton> btnSet;
+	
+	ReservationVo resVo;
 
 	public PTreserved() {
+		fDao  = new FitnessDao(); //Dao 생성
+		id    = id2; // 계정을 받아 변수에 저장
 		
 		//Label~
 		lblReserved = new JLabel("PT 예약");
@@ -63,8 +75,17 @@ public class PTreserved extends JFrame {
 		cbDate=new JComboBox<>(days);
 		cbDate.setBounds(400, 50, 150, 20);
 		getContentPane().add(cbDate);
+		aDate=(String) cbDate.getSelectedItem();
 		//오늘의 예약 일정 표시(default)
-		lblReserved.setText((String) cbDate.getSelectedItem()+" 예약 일정");
+		lblReserved.setText(aDate+" 예약 일정");
+		
+		
+		//트레이너 박스
+		String[] trainers={"김승신","우형근","최헌성","김민성","김영근"};
+		cbTrainers=new JComboBox<>(trainers);
+		cbTrainers.setBounds(200, 50, 150, 20);
+		getContentPane().add(cbTrainers);
+		tName=(String)cbTrainers.getSelectedItem();
 
 		
 		//버튼들 9~20시
@@ -137,17 +158,9 @@ public class PTreserved extends JFrame {
 		btnSet.add(8, JB19h);
 		btnSet.add(8, JB20h);
 		
-		//default = 모두 예약 가능 상태
-		for (JButton jBtn : btnSet) {
-			jBtn.setBackground(Color.GREEN);
-		}
 		
-		//ArrayList를 던져 현재 예약상황에 맞는 버튼 상태로 변경
-		fDao = new FitnessDao();
-		btnSet=fDao.getBtn((String) cbDate.getSelectedItem(),btnSet);
-		
-		//ArrayList를 던져 현재 자신이 예약한 시간 버튼의 상태를 변경
-		btnSet=fDao.getMyRes((String) cbDate.getSelectedItem(),id,btnSet);
+		// 버튼 상태 조절
+		refresh();
 		
 		
 		
@@ -167,6 +180,20 @@ public class PTreserved extends JFrame {
 		this.setVisible(true);
 
 	}
+	
+	public void refresh(){ //새로 고침
+		//default = 모두 예약 가능 상태 
+				for (JButton jBtn : btnSet) {
+					jBtn.setBackground(Color.GREEN);
+				}
+		//ArrayList를 던져 현재 예약상황에 맞는 버튼 상태로 변경
+				
+				btnSet=fDao.getBtn(aDate,btnSet);
+				
+		//ArrayList를 던져 현재 자신이 예약한 시간 버튼의 상태를 변경
+				btnSet=fDao.getMyRes(tName,aDate,id,btnSet);
+	}
+	
 	
 	// ActionListener
 	@Override
