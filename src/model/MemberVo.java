@@ -12,6 +12,8 @@ public class MemberVo {
 	private String tel;
 	private String gender;
 	private String address;
+	private String ptTime;
+	private String remainNum;
 
 	// 생성자
 	
@@ -49,7 +51,21 @@ public class MemberVo {
 		this.gender = gender;
 		this.address = address;
 	}
-
+	public MemberVo(String height, String weight,String id, String name, String birth, 
+			String tel, String gender, String address,
+			String remainNum, String ptTime) {
+		
+		this.id = id;
+		this.height = height;
+		this.weight = weight;
+		this.name = name;
+		this.birth = birth;
+		this.tel = tel;
+		this.gender = gender;
+		this.address = address;
+		this.remainNum = remainNum;
+		this.ptTime = ptTime;
+	}
 	// Getter /Setter
 	public String getHeight() {
 		return height;
