@@ -28,7 +28,7 @@ public class UserMenu extends JFrame implements ActionListener{
 		LogoutButton.setBounds(463, 24, 97, 36);
 		getContentPane().add(LogoutButton);
 		
-		PTButton = new JButton("<html><body style='text-align:center;'>PT 및 상담<br />예약</body></html>");
+		PTButton = new JButton("PT예약");
 		PTButton.setBounds(54, 149, 105, 230);
 		getContentPane().add(PTButton);
 		
@@ -57,6 +57,8 @@ public class UserMenu extends JFrame implements ActionListener{
 		case "로그아웃" : new UserLoginPage(); this.dispose(); break;
 		case "내 정보" : new MyInfo(name, id); this.dispose(); break;
 		case "연장하기" :new PTPrice(id); this.dispose(); break;
+		case "PT예약" : new PTreserved(name, id); this.dispose();break;
+		
 		}
 		
 	}
