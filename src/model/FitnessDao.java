@@ -700,45 +700,50 @@ public class FitnessDao {
 	// 회원 개인 정보 조회( 점검 완료 ) -- 내 정보 창에 나오는 정보 위주
 	public MemberVo getMemInfo(String id) {
 		MemberVo memVo = null;
-		
+
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		String sql= "SELECT  MEM_NAME, TEL, GENDER, ADDR, HEIGHT, WEIGHT";
-		sql		 += " FROM MEMBER";
-		sql	 	 += " WHERE ID = ?";
-				
+
+		String sql = "SELECT  M.MEM_NAME, M.TEL, M.GENDER, M.ADDR, M.HEIGHT, M.WEIGHT, MEM_BIRTH, E.REAMIN_NUM, R.RES_DATE";
+		sql += " FROM MEMBER M, RESERVATION R, EXCUTION E";
+		sql += " WHERE M.MEM_ID = R.MEM_ID AND R.RES_ID = E.RES_ID";
+
 		try {
-			conn  = DBConn.getInstance();
+			conn = DBConn.getInstance();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			rs    = pstmt.executeQuery();
-			if(rs.next()) {
-				String name   = rs.getString("MEM_NAME");
-				String tel    = rs.getString("TEL");
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+
+				String name = rs.getString("MEM_NAME");
+				String tel = rs.getString("TEL");
 				String gender = rs.getString("GENDER");
-				String addr   = rs.getString("ADDR");
-				String height    = rs.getString("HEIGHT");
-				String weight    = rs.getString("WEIGHT");
-				
-				memVo 		  = new MemberVo(height, weight, name,
-						tel, gender, addr); // 생성자 새로 생성했음 - 김영근
+				String addr = rs.getString("ADDR");
+				String height = rs.getString("HEIGHT");
+				String weight = rs.getString("WEIGHT");
+				String birth = rs.getString("MEM_BIRTH");
+				String remainNum = rs.getString("REMAIN_NUM");
+				String ptTime = rs.getString("RES_DATE");
+
+				memVo = new MemberVo(height, weight, name, birth, tel, 
+						gender, addr, remainNum, ptTime); // 생성자 새로 생성했음 - 김영근
+
+				return memVo;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-				try {
-					if(rs!=null)rs.close();
-					if(pstmt!=null)pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		
-		
 		return memVo;
-		
+
 	}
 	
 	
