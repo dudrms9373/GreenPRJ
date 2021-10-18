@@ -200,35 +200,63 @@ public class PTreserved extends JFrame {
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getActionCommand().equals("<이전")){ //이전 버튼
-			dispose(); new UserMenu();
+			dispose();
 		}
+		
+		//시간 버튼 선택시 예약 추가 창 뜨기(미완성)
+		
 		String time="";
+		Color col=null;
+		
 		for (int num = 9; num <= 20; num++) {
 			time=String.format("%02d:00", num);
+			//해당 시간의 색상 추출 반복문
+			for(JButton btns : btnSet){
+				if(btns.getText().equals(time)){
+					col = btns.getBackground();
+				}
+			}
 			
 			if(e.getActionCommand().equals(time)){
 				String date=(String) cbDate.getSelectedItem();
 				String resDate=date+" "+time; 
 				
-				int ans = JOptionPane.showOptionDialog(null, resDate+"\n예약하시겠습니까?",
-						"PT 예약 확인",
-						JOptionPane.YES_NO_CANCEL_OPTION,
-					    JOptionPane.INFORMATION_MESSAGE,
-					    null,
-					    answer,
-					    answer[1]);
-				if(ans==0){
-					memId = fDao.getMemId(id);
-					tId   = fDao.getTId(tName);
-					resVo=new ReservationVo(resDate, memId, tId);
-					fDao.reserve(resVo);
+				String[] answer = {"예약", "취소"};
+					
+					if(col==Color.GREEN){ //예약이 가능한 경우
+						
+						int ans = JOptionPane.showOptionDialog(null, resDate+"\n예약하시겠습니까?",
+								"PT 예약 확인",
+								JOptionPane.YES_NO_CANCEL_OPTION,
+								JOptionPane.INFORMATION_MESSAGE,
+								null,
+								answer,
+								answer[1]);
+						if(ans==0){
+							memId = fDao.getMemId(id);
+							tId   = fDao.getTId(tName);
+							resVo=new ReservationVo(resDate, memId, tId);
+							fDao.reserve(resVo);
+							refresh();
+						}	
+					}
+					else
+						if(col==Color.BLUE){ //기존 예약을 취소할 경우
+							fDao.removeRes(resDate,memId);
+							refresh();
 				}
+				
+					
+				
 			}
-			
 		}
 		
-		//콤보 박스의 날짜를 선택할 때마다 레이블의 텍스트 변경
-		lblReserved.setText((String) cbDate.getSelectedItem()+" 예약 일정");
+		
+	//콤보 박스의 날짜를 선택할 때마다 레이블의 텍스트 변경
+	lblReserved.setText((String) cbDate.getSelectedItem()+" 예약 일정");
+		
+	
+		
 	}
 
 
