@@ -17,8 +17,11 @@ public class PTPrice extends JFrame implements ActionListener{
 	JButton extension;
 	JRadioButton w6,w15,w24,w36;
 	ButtonGroup bg;
+	private String id = "";
 
-	public PTPrice() {
+	public PTPrice(String id) {
+		
+		this.id = id;
 		this.setTitle("남은 기간 연장");
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
