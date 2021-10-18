@@ -19,7 +19,7 @@ public class UserMenu extends JFrame implements ActionListener{
 		this.setTitle("4. 회원로그인");
 		
 		
-		JLabel TitleLabel = new JLabel("<html><body style='text-align:center;'>어서오세요."+id+"님!<br />오늘도 득근 하세요!!</body></html>",JLabel.CENTER);
+		JLabel TitleLabel = new JLabel("<html><body style='text-align:center;'>어서오세요."+name+"님!<br />오늘도 득근 하세요!!</body></html>",JLabel.CENTER);
 		TitleLabel.setFont(new Font("굴림", Font.BOLD, 30));
 		TitleLabel.setBounds(54, 10, 400, 113);
 		getContentPane().add(TitleLabel);
