@@ -775,7 +775,7 @@ public class FitnessDao {
 	}
 	
 	//id를 받아 회원번호를 가져오는 메소드
-	p int getMemId(String id) {
+	int getMemId(String id) {
 		int memId = 0;
 		Connection conn = null;	
 		PreparedStatement pstmt = null;
@@ -853,7 +853,7 @@ public class FitnessDao {
 	}
 	
 	//시간 버튼의 상태를 변경(빨강 비활성)
-	public ArrayList<JButton> getBtn(String date,ArrayList<JButton> btnSet) {
+	
 		public ArrayList<JButton> getBtn(String date,ArrayList<JButton> btnSet) {
 		for (JButton jBtn : btnSet) {
 			String time = jBtn.getText();
