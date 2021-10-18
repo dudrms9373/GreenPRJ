@@ -256,7 +256,7 @@ public class PTreserved extends JFrame {
 						}	
 					}
 					else
-						if(col==Color.BLUE){ //기존 예약을 취소할 경우
+						if(col==Color.){ //기존 예약을 취소할 경우
 							boolean check=fDao.removeRes(resDate,memId);
 							refresh();
 							if(check){
