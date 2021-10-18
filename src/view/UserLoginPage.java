@@ -109,8 +109,9 @@ public class UserLoginPage extends JFrame implements ActionListener{
 		if(n == 1) {
 			fv.setId(this.IDtextField.getText());     
 			String name = fd.loginCheck1(fv.getId());
+			String id = IDtextField.getText();
 			this.dispose();
-			new UserMenu(name);
+			new UserMenu(name, id);
 		}else if(n == -1 ) {
 			this.IDtextField.setText("");
 			this.PWField.setText("");
