@@ -156,10 +156,7 @@ public class JoinPage extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "가입":
-			nullCheck(check);
-			if (check == false)
-				break;
-
+			
 			insertUser();
 			this.dispose();
 			new UserLoginPage();
@@ -172,55 +169,7 @@ public class JoinPage extends JFrame implements ActionListener {
 
 	}
 	
-	// textField Null인지아닌지 검사
-	private boolean nullCheck(boolean check) {
-		FitnessDao fd = new FitnessDao();
-		String name = this.TextFieldName.getText();
-		String birth = this.TextFieldBirth.getText();
-		String id = this.TextFieldID.getText();
-		String pwd = this.TextFieldPWD.getText();
-		String tel = this.TextFieldTel.getText();
-		String addr = this.TextFieldAddres.getText();
-		String gender = this.TextFieldGender.getText();
-		String height = this.textFieldHeight.getText();
-		String weight = this.textFieldWeight.getText();
-
-		if (name.equals("")) {
-			JOptionPane.showMessageDialog(null, "이름을 입력해 주세요.", "에러 메세지", JOptionPane.OK_OPTION);
-			TextFieldName.requestFocus(); // 포커스 이동
-		}
-
-		else if (birth.equals("")) {
-			JOptionPane.showMessageDialog(null, "생년월일을 입력 해주세요.", "에러 메세지", JOptionPane.OK_OPTION);
-			TextFieldBirth.requestFocus();
-		} else if (id.equals("")) {
-			JOptionPane.showMessageDialog(null, "ID를 입력 해주세요.", "에러 메세지", JOptionPane.OK_OPTION);
-			TextFieldID.requestFocus();
-		} else if (pwd.equals("")) {
-			JOptionPane.showMessageDialog(null, "패스워드를 입력 해주세요.", "에러 메세지", JOptionPane.OK_OPTION);
-			TextFieldPWD.requestFocus();
-		} else if (tel.equals("")) {
-			JOptionPane.showMessageDialog(null, "전화번호를 입력 해주세요.", "에러 메세지", JOptionPane.OK_OPTION);
-			TextFieldTel.requestFocus();
-		} else if (addr.equals("")) {
-			JOptionPane.showMessageDialog(null, "주소를 입력 해주세요.", "에러 메세지", JOptionPane.OK_OPTION);
-			TextFieldAddres.requestFocus();
-		} else if (gender.equals("")) {
-			JOptionPane.showMessageDialog(null, "성별을 입력 해주세요.", "에러 메세지", JOptionPane.OK_OPTION);
-			TextFieldGender.requestFocus();
-		} else if (height.equals("")) {
-			JOptionPane.showMessageDialog(null, "대략적인 키를 입력 해주세요.", "에러 메세지", JOptionPane.OK_OPTION);
-			textFieldHeight.requestFocus();
-		} else if (weight.equals("")) {
-			JOptionPane.showMessageDialog(null, "대략적인 몸무게를 입력 해주세요.", "에러 메세지", JOptionPane.OK_OPTION);
-			textFieldWeight.requestFocus();
-		}
-
-		check = false;
-		this.check = check;
-		return check;
-
-	}
+	
 
 	private void insertUser() {
 		FitnessDao fd = new FitnessDao();
@@ -234,7 +183,7 @@ public class JoinPage extends JFrame implements ActionListener {
 			this.dispose();
 			new UserLoginPage();
 		} else {
-			JOptionPane.showMessageDialog(null, "아이디가 중복되었습니다", "중복", JOptionPane.CANCEL_OPTION);
+			JOptionPane.showMessageDialog(null, "아이디가 중복되었거나 빈칸이 있습니다", "중복", JOptionPane.CANCEL_OPTION);
 			this.TextFieldID.requestFocus();
 		}
 
