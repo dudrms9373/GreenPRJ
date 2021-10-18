@@ -775,7 +775,7 @@ public class FitnessDao {
 	}
 	
 	//id를 받아 회원번호를 가져오는 메소드
-	int getMemId(String id) {
+	public int getMemId(String id) {
 		int memId = 0;
 		Connection conn = null;	
 		PreparedStatement pstmt = null;
