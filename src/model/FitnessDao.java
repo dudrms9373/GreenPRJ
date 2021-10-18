@@ -480,42 +480,40 @@ public class FitnessDao {
 		} 
 	}
 
-	// 예약하기 (결과 메시지 )
-	public String reserve(ReservationVo resVo) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String result = "예약에 실패했습니다";
-		String msg = "";
-		String sql = "INSERT INTO RESERVATION(RES_ID ,RES_DATE, MEM_ID, T_ID)";
-		sql += " VALUES (SEQ_RES.NEXTVAL ,? , ? , ? , ? , ? )";
-
-		try {
-			conn = DBConn.getInstance();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, resVo.getResDate());
-			pstmt.setInt(2, resVo.getResMemId());
-			pstmt.setInt(3, resVo.getResTId());
-
-			pstmt.executeUpdate();
+	// 예약하기 
+		public Boolean reserve(ReservationVo resVo){
+			Boolean check =false;
+			String sql = "INSERT INTO RESERVATION(RES_ID ,RES_DATE, MEM_ID, T_ID)";
+			sql   	  += " VALUES (SEQ_RES ,? , ? , ? , ? , ? )";
 			
-
-			result = resVo.getResNote() + "에 PT가 예약되었습니다";
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
+			Connection		  conn  = null;
+			PreparedStatement pstmt = null;
+			
 			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
+				conn=DBConn.getInstance();
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, resVo.getResDate());
+				pstmt.setInt(2, resVo.getResMemId());
+				pstmt.setInt(3, resVo.getResTId());
+				
+				pstmt.executeUpdate();
+				
+				
+				check = true;
 			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if( pstmt != null )  pstmt.close();
+				} catch (SQLException e) {
+				}
+		 
+
+			return check;
+
 			}
+		
 		}
-
-		return result;
-
-	}
 
 	// 특이사항 추가
 	public String writeSpe(SpecialVo speVo) {
