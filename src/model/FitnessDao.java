@@ -487,16 +487,15 @@ public class FitnessDao {
 		ResultSet rs = null;
 		String result = "예약에 실패했습니다";
 		String msg = "";
-		String sql = "INSERT INTO RESERVATION(RES_ID ,RES_DATE, RES_NOTE, MEM_ID, T_ID)";
+		String sql = "INSERT INTO RESERVATION(RES_ID ,RES_DATE, MEM_ID, T_ID)";
 		sql += " VALUES (SEQ_RES.NEXTVAL ,? , ? , ? , ? , ? )";
 
 		try {
 			conn = DBConn.getInstance();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, resVo.getResDate());
-			pstmt.setString(2, resVo.getResNote());
-			pstmt.setInt(3, resVo.getResMemId());
-			pstmt.setInt(4, resVo.getResTId());
+			pstmt.setInt(2, resVo.getResMemId());
+			pstmt.setInt(3, resVo.getResTId());
 
 			pstmt.executeUpdate();
 			
@@ -634,7 +633,7 @@ public class FitnessDao {
 		return outV;
 	}
 	
-	// 예약 변경 메소드(update set으로 기존 정보만 변경)
+	// 예약 변경 메소드(update set으로 기존 정보만 변경) 필요없어짐
 	public String updateRes(ReservationVo resVo1 ,ReservationVo resVo2) {
 		String result="예약 변경에 실패하였습니다";
 
@@ -668,26 +667,35 @@ public class FitnessDao {
 		
 	}
 	
-	//회원 번호로 예약 취소하기
-	public void removeRes(int resMemId) {
-		Connection conn = null;
-		PreparedStatement pstmt =null;
-		
-		
-		String sql= "DELETE FROM RESERVATION WHERE MEM_ID= ?";
-		try {
-			conn= DBConn.getInstance();
-			pstmt= conn.prepareStatement(sql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
+	//예약 취소하기
+		public boolean removeRes(String resDate, int memId) {
+			boolean check = false;
+			Connection conn = null;
+			PreparedStatement pstmt =null;
+			
+			
+			String sql = "DELETE FROM RESERVATION";
+			sql	  += " WHERE RES_DATE= ? ";
+			sql	  += " AND MEM_ID = ? ";
 			try {
-				if (pstmt != null)
-					pstmt.close();
+				conn= DBConn.getInstance();
+				pstmt= conn.prepareStatement(sql);
+				pstmt.setString(1, resDate);
+				pstmt.setInt(2, memId);
+				
+				
+				check = true;
 			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (pstmt != null)
+						pstmt.close();
+				} catch (SQLException e) {
+				}
 			}
-		}	
-	}
+			return check;	
+		}
 	
 	// 회원 개인 정보 조회( 점검 완료 ) -- 내 정보 창에 나오는 정보 위주
 	public MemberVo getMemInfo(String id) {
