@@ -54,7 +54,7 @@ public class PwdChange extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		chagePwd(); new UserLoginPage();
+		chagePwd(); new LoginPage();
 			
 	}
 	

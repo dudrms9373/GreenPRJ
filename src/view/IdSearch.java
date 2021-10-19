@@ -84,7 +84,7 @@ public class IdSearch extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "<이전":this.dispose(); new UserLoginPage(); break;
+		case "<이전":this.dispose(); new LoginPage(); break;
 		case "아이디 찾기": 
 			nullCheck(check);
 			if (check == false) // check로 이름 / 생년월일 / 전번 안적었을때 다이얼로그 1개만 뜨게
@@ -111,7 +111,7 @@ public class IdSearch extends JFrame implements ActionListener{
 						(null, msg, "확인", 
 								JOptionPane.INFORMATION_MESSAGE);
 			dispose();
-		        new UserLoginPage();
+		        new LoginPage();
 		}else{
 			JOptionPane.showMessageDialog(null,"조회된 아이디가 없습니다","에러 메세지",JOptionPane.OK_OPTION );
 		          // 화면 초기화

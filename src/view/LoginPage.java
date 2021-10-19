@@ -131,10 +131,6 @@ public class LoginPage extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand().equals("<이전")){
-			this.dispose(); new FirstPage();
-		}
-		
 		
 		if(e.getActionCommand().equals("회원")){
 			turnOnOff(true);

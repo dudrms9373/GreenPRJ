@@ -58,7 +58,7 @@ public class UserMenu extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "로그아웃" : new UserLoginPage(); this.dispose(); break;
+		case "로그아웃" : new LoginPage(); this.dispose(); break;
 		case "내 정보" : new MyInfo(name, id); this.dispose(); break;
 		case "연장하기" :new PTPrice(name,id); this.dispose(); break;
 		case "PT예약" : new PTreserved(name, id); this.dispose();break;

@@ -37,10 +37,11 @@ public class PTreserved extends JFrame implements ActionListener {
 	ArrayList<JButton> btnSet;
 	
 	ReservationVo resVo;
-
-	public PTreserved(String id2) {
+	String name= "";
+	public PTreserved(String name,String id2) {
 		fDao  = new FitnessDao(); //Dao 생성
 		id    = id2; // 계정을 받아 변수에 저장
+		this.name = name;
 		
 		//Label~
 		lblReserved = new JLabel("PT 예약");

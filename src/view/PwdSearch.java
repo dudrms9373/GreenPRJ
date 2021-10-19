@@ -88,7 +88,7 @@ public class PwdSearch extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "<이전": dispose(); new UserLoginPage(); break;
+		case "<이전": dispose(); new LoginPage(); break;
 		case "비밀번호 찾기": 
 		nullCheck(check);
 			if (check == false)

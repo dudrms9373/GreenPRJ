@@ -159,11 +159,11 @@ public class JoinPage extends JFrame implements ActionListener {
 			
 			insertUser();
 			this.dispose();
-			new UserLoginPage();
+			new LoginPage();
 			break;
 		case "취소":
 			this.dispose();
-			new UserLoginPage();
+			new LoginPage();
 			break;
 		}
 
@@ -183,7 +183,7 @@ public class JoinPage extends JFrame implements ActionListener {
 		if (num == 1) {
 			JOptionPane.showMessageDialog(null, "회원가입 완료", "완료", JOptionPane.INFORMATION_MESSAGE);
 			this.dispose();
-			new UserLoginPage();
+			new LoginPage();
 		} else {
 			JOptionPane.showMessageDialog(null, "아이디가 중복되었거나 빈칸이 있습니다", "중복", JOptionPane.CANCEL_OPTION);
 			this.TextFieldID.requestFocus();
