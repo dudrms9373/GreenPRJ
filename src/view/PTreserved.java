@@ -24,7 +24,7 @@ public class PTreserved extends JFrame implements ActionListener {
 	String[] days;
 	String[] trainers;
 	int todayHour;
-	
+
 	JLabel lblReserved, lblAM, lblPM;
 
 	JComboBox<String> cbDate;
@@ -38,9 +38,10 @@ public class PTreserved extends JFrame implements ActionListener {
 
 	ReservationVo resVo;
 
+
 	public PTreserved(String id2) {
 		fDao = new FitnessDao(); // Dao 생성
-		id = id2; // 계정을 받아 변수에 저장
+		this.id = id2; // 계정을 받아 변수에 저장
 
 		// Label~
 		lblReserved = new JLabel("PT 예약");
@@ -61,23 +62,19 @@ public class PTreserved extends JFrame implements ActionListener {
 		getContentPane().add(lblPM);
 
 		// 오늘을 포함한 8일이 포함된 콤보박스 작성
-		Calendar today = Calendar.getInstance();
-		int year = today.get(Calendar.YEAR);
-		int month = today.get(Calendar.MONTH);
-		int date = today.get(Calendar.DATE);
-		todayHour = today.get(Calendar.HOUR_OF_DAY);
-		String fmt = "%4d-%02d-%02d";
-		days = new String[8];
-		for (int i = 0; i < days.length; i++) {
-			String day = String.format(fmt, year, month + 1, date + i);
-			days[i] = day;
+				Calendar today = Calendar.getInstance();
+				int year = today.get(Calendar.YEAR);
+				int month = today.get(Calendar.MONTH);
+				int date = today.get(Calendar.DATE);
+				todayHour = today.get(Calendar.HOUR_OF_DAY);
+				String fmt = "%4d-%02d-%02d";
+				days = new String[8];
+				for (int i = 0; i < days.length; i++) {
+					String day = String.format(fmt, year, month + 1, date + i);
+					days[i] = day;
 
-		}
-		
-		
-		
-		
-		
+				}
+
 		cbDate = new JComboBox<>(days);
 		cbDate.setBounds(400, 50, 150, 20);
 		getContentPane().add(cbDate);
@@ -87,9 +84,9 @@ public class PTreserved extends JFrame implements ActionListener {
 
 		// 트레이너 박스
 		trainers = new String[3];
-		trainers[0] = "조성오";
-		trainers[1] = "유은영";
-		trainers[2] = "임형준";
+		trainers[1] = "조성오";
+		trainers[2] = "유은영";
+		trainers[3] = "임형준";
 
 		cbTrainers = new JComboBox<>(trainers);
 		cbTrainers.setBounds(200, 50, 150, 20);
@@ -98,9 +95,9 @@ public class PTreserved extends JFrame implements ActionListener {
 
 		// 버튼들 9~20시
 
-		JBpreview = new JButton("<이전");
+		JBpreview = new JButton("<회원화면");
 		getContentPane().setLayout(null);
-		JBpreview.setBounds(12, 10, 79, 23);
+		JBpreview.setBounds(12, 10, 100, 30);
 		getContentPane().add(JBpreview);
 
 		JB9h = new JButton("09:00");
@@ -168,8 +165,6 @@ public class PTreserved extends JFrame implements ActionListener {
 
 		// 버튼 상태 조절
 		refresh();
-		
-
 
 		// ActionListener에 버튼 등록
 		/// 날짜 콤보 박스
@@ -222,11 +217,11 @@ public class PTreserved extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getActionCommand().equals("<이전")) { // 이전 버튼
+		if (e.getActionCommand().equals("<회원화면")) { // 이전 버튼
 			dispose();
+			new UserMenu(id);
 		}
 
-		
 		
 
 		// 시간 버튼 선택시 예약 추가 창 뜨기(미완성)
@@ -286,13 +281,13 @@ public class PTreserved extends JFrame implements ActionListener {
 		}
 
 		// 콤보 박스의 날짜를 선택할 때마다 레이블의 텍스트 변경
-		lblReserved.setText((String) cbDate.getSelectedItem() + " 예약 일정");
-		refresh();
-	}
+				lblReserved.setText((String) cbDate.getSelectedItem() + " 예약 일정");
+				refresh();
+			}
 
-//	public static void main(String[] args) {
-//		String id = "guest2";
-//		new PTreserved(id);
-//
-//	}
-}
+//			public static void main(String[] args) {
+//				String id = "guest2";
+//				new PTreserved(id);
+		//
+//			}
+		}
