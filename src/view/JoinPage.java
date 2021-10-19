@@ -173,9 +173,11 @@ public class JoinPage extends JFrame implements ActionListener {
 
 	private void insertUser() {
 		FitnessDao fd = new FitnessDao();
-		MemberVo fv = new MemberVo(TextFieldName.getText(), TextFieldBirth.getText(), TextFieldID.getText(),
-				TextFieldPWD.getText(), TextFieldTel.getText(), TextFieldGender.getText(), TextFieldAddres.getText(),
-				textFieldHeight.getText(), textFieldWeight.getText());
+		int height = Integer.parseInt(textFieldHeight.getText());
+		int weight = Integer.parseInt(textFieldWeight.getText());
+		MemberVo fv = new MemberVo(height, weight, TextFieldName.getText(), TextFieldBirth.getText(), TextFieldID.getText(),
+				TextFieldPWD.getText(), TextFieldTel.getText(), TextFieldGender.getText(), TextFieldAddres.getText()
+				);
 		int num = fd.JoinFitness(fv);
 		// 메세지 상자 출력
 		if (num == 1) {
