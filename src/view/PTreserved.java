@@ -37,11 +37,10 @@ public class PTreserved extends JFrame implements ActionListener {
 	ArrayList<JButton> btnSet;
 	
 	ReservationVo resVo;
-	String name= "";
-	public PTreserved(String name,String id2) {
+
+	public PTreserved(String id2) {
 		fDao  = new FitnessDao(); //Dao 생성
 		id    = id2; // 계정을 받아 변수에 저장
-		this.name = name;
 		
 		//Label~
 		lblReserved = new JLabel("PT 예약");
@@ -68,9 +67,8 @@ public class PTreserved extends JFrame implements ActionListener {
 		int month=today.get(Calendar.MONTH);
 		int date=today.get(Calendar.DATE);
 		String fmt="%4d-%02d-%02d";
-		days=new String[9];
-		days[0]=" ";
-		for(int i=1 ; i<days.length ; i++){
+		days=new String[8];
+		for(int i=0 ; i<days.length ; i++){
 			String day = String.format(fmt,year,month+1,date+i);
 			days[i]=day;
 			
@@ -171,7 +169,9 @@ public class PTreserved extends JFrame implements ActionListener {
 		
 		// 버튼 상태 조절
 		refresh();
-		
+		for (JButton jBtns : btnSet) {
+			jBtns.setEnabled(false);
+		}
 		
 		
 		// ActionListener에 버튼 등록
@@ -192,20 +192,20 @@ public class PTreserved extends JFrame implements ActionListener {
 	}
 	
 	public void refresh(){ //새로 고침
+		aDate=(String) cbDate.getSelectedItem();
+		tName=(String)cbTrainers.getSelectedItem();
 		//default = 모두 예약 가능 상태 
 				for (JButton jBtn : btnSet) {
 					jBtn.setBackground(Color.GREEN);
 					jBtn.setEnabled(true);
-					jBtn.setVisible(false);
 				}
 		//
-				
-		//ArrayList를 던져 현재 예약상황에 맞는 버튼 상태로 변경
+		//ArrayList를 던져 현재 예약상황에 맞는 버튼 상태로 변경(트레이너 이름을 인자로 넣어 수정할 필요)
 				
 				btnSet=fDao.getBtn(aDate,btnSet);
 				
 		//ArrayList를 던져 현재 자신이 예약한 시간 버튼의 상태를 변경
-				btnSet=fDao.getMyRes(tName,aDate,id,btnSet);
+				btnSet=fDao.getMyRes(aDate,tName,id,btnSet);
 	}
 	
 	
@@ -217,18 +217,21 @@ public class PTreserved extends JFrame implements ActionListener {
 			dispose();
 		}
 		
-		if(cbDate.getSelectedItem()==days[1]) { 
+		if(cbDate.getSelectedItem()==days[0]) { 
 			refresh();
 			for (JButton jbtns : btnSet) {
 				jbtns.setVisible(true);
 				jbtns.setEnabled(false);
-				
 			}
+			refresh();
 			
 		}
 		
 		for (String d : days) {
-			if(cbDate.getSelectedItem()==days) {
+			if(cbDate.getSelectedItem()==d&&d!=days[0]) {
+				for (JButton jbtns : btnSet) {
+					jbtns.setVisible(true);
+				}
 				refresh();
 			}
 			
@@ -261,7 +264,8 @@ public class PTreserved extends JFrame implements ActionListener {
 				String resDate=date+" "+time; 
 				String[] answer = {"예약", "취소"};
 				String[] cancel = {"예약취소", "닫기"};
-					
+				memId = fDao.getMemId(id);
+				tId   = fDao.getTId(tName);
 					if(col==Color.GREEN){ //예약이 가능한 경우
 						
 						int ans = JOptionPane.showOptionDialog(null, resDate+"\n예약하시겠습니까?",
@@ -272,8 +276,6 @@ public class PTreserved extends JFrame implements ActionListener {
 								answer,
 								answer[1]);
 						if(ans==0){
-							memId = fDao.getMemId(id);
-							tId   = fDao.getTId(tName);
 							resVo=new ReservationVo(resDate, memId, tId);
 							boolean check=fDao.reserve(resVo);
 							if(check){
@@ -308,13 +310,14 @@ public class PTreserved extends JFrame implements ActionListener {
 							
 							if(ans2==0){
 								boolean check=fDao.removeRes(resDate,memId);
-								refresh();
+		
 								if(check){
 									JOptionPane.showMessageDialog
 									(null,
 											resDate+"\n 예약이 취소되었습니다"
 											,"예약 취소 확인"
 											,JOptionPane.OK_OPTION);
+									refresh();
 								}
 								else{
 									JOptionPane.showMessageDialog
@@ -343,3 +346,4 @@ public class PTreserved extends JFrame implements ActionListener {
 //
 //	}
 }
+
