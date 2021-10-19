@@ -12,12 +12,13 @@ public class UserMenu extends JFrame implements ActionListener{
 	
 	
 	JButton LogoutButton, PTButton, InfoButton, ExtensionButton;
-	private String id="";
 	private String name = "";
+	private String id="";
 	
 	public UserMenu(String name, String id) {
 		this.setTitle("4. 회원로그인");
-		
+		this.name = name;
+		this.id = id;
 		
 		JLabel TitleLabel = new JLabel("<html><body style='text-align:center;'>어서오세요."+name+"님!<br />오늘도 득근 하세요!!</body></html>",JLabel.CENTER);
 		TitleLabel.setFont(new Font("굴림", Font.BOLD, 30));
@@ -59,11 +60,14 @@ public class UserMenu extends JFrame implements ActionListener{
 		switch(e.getActionCommand()) {
 		case "로그아웃" : new UserLoginPage(); this.dispose(); break;
 		case "내 정보" : new MyInfo(name, id); this.dispose(); break;
-		case "연장하기" :new PTPrice(id); this.dispose(); break;
+		case "연장하기" :new PTPrice(name,id); this.dispose(); break;
 		case "PT예약" : new PTreserved(name, id); this.dispose();break;
 		
 		}
 		
+	}
+	public static void main(String[] args) {
+		new UserMenu("d", "s");
 	}
 
 	
