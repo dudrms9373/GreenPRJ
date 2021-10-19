@@ -23,7 +23,8 @@ public class PTreserved extends JFrame implements ActionListener {
 	int memId, tId;
 	String[] days;
 	String[] trainers;
-
+	int todayHour;
+	
 	JLabel lblReserved, lblAM, lblPM;
 
 	JComboBox<String> cbDate;
@@ -64,6 +65,7 @@ public class PTreserved extends JFrame implements ActionListener {
 		int year = today.get(Calendar.YEAR);
 		int month = today.get(Calendar.MONTH);
 		int date = today.get(Calendar.DATE);
+		todayHour = today.get(Calendar.HOUR_OF_DAY);
 		String fmt = "%4d-%02d-%02d";
 		days = new String[8];
 		for (int i = 0; i < days.length; i++) {
@@ -71,7 +73,11 @@ public class PTreserved extends JFrame implements ActionListener {
 			days[i] = day;
 
 		}
-
+		
+		
+		
+		
+		
 		cbDate = new JComboBox<>(days);
 		cbDate.setBounds(400, 50, 150, 20);
 		getContentPane().add(cbDate);
@@ -164,6 +170,7 @@ public class PTreserved extends JFrame implements ActionListener {
 		refresh();
 		
 
+
 		// ActionListener에 버튼 등록
 		/// 날짜 콤보 박스
 		this.cbDate.addActionListener(this);
@@ -198,6 +205,17 @@ public class PTreserved extends JFrame implements ActionListener {
 
 		// ArrayList를 던져 현재 자신이 예약한 시간 버튼의 상태를 변경
 		btnSet = fDao.getMyRes(aDate, tName, id, btnSet);
+		
+		// 현재 시간+2시간 만큼의 시간의 예약을 불가능 하게 함.
+		if(cbDate.getSelectedItem()==days[0]) {
+			for (JButton jBtns : btnSet) {
+				String[] li= jBtns.getText().split(":");
+				int hour=Integer.parseInt(li[0]);
+					if(todayHour+2>=hour) {
+						jBtns.setEnabled(false);
+					}
+			}
+		}
 	}
 
 	// ActionListener
@@ -208,7 +226,7 @@ public class PTreserved extends JFrame implements ActionListener {
 			dispose();
 		}
 
-
+		
 		
 
 		// 시간 버튼 선택시 예약 추가 창 뜨기(미완성)
