@@ -1,25 +1,28 @@
 package view;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import java.awt.Color;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.FlowLayout;
-import javax.swing.SwingConstants;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Calendar;
 
-public class PTreserved extends JFrame implements ActionListener{
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+
+import model.FitnessDao;
+import model.ReservationVo;
+
+public class PTreserved extends JFrame implements ActionListener {
 	String id;
 	String aDate, tName;
 	int memId, tId;
+	String[] days;
+	String[] trainers;
 
 	JLabel lblReserved, lblAM, lblPM;
 	
@@ -35,7 +38,7 @@ public class PTreserved extends JFrame implements ActionListener{
 	
 	ReservationVo resVo;
 
-	public PTreserved() {
+	public PTreserved(String id2) {
 		fDao  = new FitnessDao(); //Dao 생성
 		id    = id2; // 계정을 받아 변수에 저장
 		
@@ -64,9 +67,9 @@ public class PTreserved extends JFrame implements ActionListener{
 		int month=today.get(Calendar.MONTH);
 		int date=today.get(Calendar.DATE);
 		String fmt="%4d-%02d-%02d";
-		String[] days=new String[8];
-		
-		for(int i=0 ; i<days.length ; i++){
+		days=new String[9];
+		days[0]=" ";
+		for(int i=1 ; i<days.length ; i++){
 			String day = String.format(fmt,year,month+1,date+i);
 			days[i]=day;
 			
@@ -81,7 +84,13 @@ public class PTreserved extends JFrame implements ActionListener{
 		
 		
 		//트레이너 박스
-		String[] trainers={"김승신","우형근","최헌성","김민성","김영근"};
+		trainers=new String[4];
+		trainers[0] = " ";
+		trainers[1] = "조성오";
+		trainers[2] = "유은영";
+		trainers[3] = "임형준";
+		
+		
 		cbTrainers=new JComboBox<>(trainers);
 		cbTrainers.setBounds(200, 50, 150, 20);
 		getContentPane().add(cbTrainers);
@@ -144,7 +153,7 @@ public class PTreserved extends JFrame implements ActionListener{
 		JB17h.setBounds(134, 327, 170, 60);
 		
 		// 시간 버튼들을 ArrayList에 담음
-		ArrayList<JButton> btnSet = new ArrayList<JButton>();
+		btnSet = new ArrayList<JButton>();
 		btnSet.add(0, JB9h);
 		btnSet.add(1, JB10h);
 		btnSet.add(2, JB11h);
@@ -185,7 +194,11 @@ public class PTreserved extends JFrame implements ActionListener{
 		//default = 모두 예약 가능 상태 
 				for (JButton jBtn : btnSet) {
 					jBtn.setBackground(Color.GREEN);
+					jBtn.setEnabled(true);
+					jBtn.setVisible(false);
 				}
+		//
+				
 		//ArrayList를 던져 현재 예약상황에 맞는 버튼 상태로 변경
 				
 				btnSet=fDao.getBtn(aDate,btnSet);
@@ -202,6 +215,31 @@ public class PTreserved extends JFrame implements ActionListener{
 		if(e.getActionCommand().equals("<이전")){ //이전 버튼
 			dispose();
 		}
+		
+		if(cbDate.getSelectedItem()==days[1]) { 
+			refresh();
+			for (JButton jbtns : btnSet) {
+				jbtns.setVisible(true);
+				jbtns.setEnabled(false);
+				
+			}
+			
+		}
+		
+		for (String d : days) {
+			if(cbDate.getSelectedItem()==days) {
+				refresh();
+			}
+			
+		for (String t : trainers ) {
+			if(cbTrainers.getSelectedItem()==trainers) {
+				refresh();
+			}
+		}
+			
+		}
+
+		
 		
 		//시간 버튼 선택시 예약 추가 창 뜨기(미완성)
 		
@@ -220,7 +258,6 @@ public class PTreserved extends JFrame implements ActionListener{
 			if(e.getActionCommand().equals(time)){
 				String date=(String) cbDate.getSelectedItem();
 				String resDate=date+" "+time; 
-				
 				String[] answer = {"예약", "취소"};
 				String[] cancel = {"예약취소", "닫기"};
 					
@@ -236,6 +273,7 @@ public class PTreserved extends JFrame implements ActionListener{
 						if(ans==0){
 							memId = fDao.getMemId(id);
 							tId   = fDao.getTId(tName);
+							resVo=new ReservationVo(resDate, memId, tId);
 							boolean check=fDao.reserve(resVo);
 							if(check){
 								JOptionPane.showMessageDialog
@@ -293,13 +331,14 @@ public class PTreserved extends JFrame implements ActionListener{
 	//콤보 박스의 날짜를 선택할 때마다 레이블의 텍스트 변경
 	lblReserved.setText((String) cbDate.getSelectedItem()+" 예약 일정");
 		
-	
+		
 		
 	}
 
 
 //	public static void main(String[] args) {
-//		new PTreserved();
+//		String id="guest2";
+//		new PTreserved(id);
 //
 //	}
 }
