@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
+import model.FitnessDao;
+
 import javax.swing.JRadioButton;
 import java.awt.Font;
 
@@ -18,11 +21,13 @@ public class PTPrice extends JFrame implements ActionListener{
 	JRadioButton w6,w15,w24,w36;
 	ButtonGroup bg;
 	private String id = "";
+	private String name = "";
 	FitnessDao fDao;
 
-	public PTPrice(String id2) {
+	public PTPrice(String name,String id2) {
 		
 		this.id = id2;
+		this.name = name;
 		this.setTitle("남은 기간 연장");
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -127,7 +132,7 @@ public class PTPrice extends JFrame implements ActionListener{
 			if(num!=0){
 				fDao.addNum(id,num);
 				dispose();
-				new MyInfo(id);
+				new MyInfo(name,id);
 			}
 		
 			
