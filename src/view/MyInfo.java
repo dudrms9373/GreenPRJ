@@ -201,7 +201,7 @@ public class MyInfo extends JFrame implements ActionListener {
 			new UserFire(id);
 			break;
 		case "연장하기":
-			new PTPrice(id);
+			new PTPrice(name,id);
 			break;
 		}
 	}
