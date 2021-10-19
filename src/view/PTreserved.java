@@ -16,7 +16,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class PTreserved extends JFrame {
+public class PTreserved extends JFrame implements ActionListener{
 	String id;
 	String aDate, tName;
 	int memId, tId;
