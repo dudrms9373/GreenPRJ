@@ -61,7 +61,7 @@ public class JoinPage extends JFrame implements ActionListener {
 		LabelTel.setBounds(25, 230, 77, 26);
 		getContentPane().add(LabelTel);
 
-		JLabel LabelGender = new JLabel("성별");
+		JLabel LabelGender = new JLabel("성별( M , W )");
 		LabelGender.setBounds(25, 280, 77, 26);
 		getContentPane().add(LabelGender);
 
@@ -158,8 +158,7 @@ public class JoinPage extends JFrame implements ActionListener {
 		case "가입":
 			
 			insertUser();
-			this.dispose();
-			new LoginPage();
+			
 			break;
 		case "취소":
 			this.dispose();
@@ -179,15 +178,17 @@ public class JoinPage extends JFrame implements ActionListener {
 				TextFieldPWD.getText(), TextFieldTel.getText(), TextFieldGender.getText(), TextFieldAddres.getText()
 				);
 		int num = fd.JoinFitness(fv);
+		System.out.println(num);
 		// 메세지 상자 출력
 		if (num == 1) {
 			JOptionPane.showMessageDialog(null, "회원가입 완료", "완료", JOptionPane.INFORMATION_MESSAGE);
 			this.dispose();
 			new LoginPage();
 		} else {
-			JOptionPane.showMessageDialog(null, "아이디가 중복되었거나 빈칸이 있습니다", "중복", JOptionPane.CANCEL_OPTION);
-			this.TextFieldID.requestFocus();
-		}
+			JOptionPane.showMessageDialog(null, "아이디가 중복되었거나 잘못입력하셨습니다. (다시 한번 확인해주세요)", "중복", JOptionPane.CANCEL_OPTION);
+			
+			}
+			
 
 	}
 }

@@ -167,7 +167,7 @@ public class LoginPage extends JFrame implements ActionListener{
 		boolean check = fDao.trainerlogin(id,pwd);
 		if(check) {
 			this.dispose();
-			new TrainerMenu();
+			new TrainerMenu(id);
 		}else if(!check) {
 			this.IDtextField.setText("");
 			this.PWField.setText("");
@@ -184,7 +184,7 @@ public class LoginPage extends JFrame implements ActionListener{
 		if(check) {
 			this.dispose();
 			String name = fDao.getName(id);
-			new UserMenu(name,id);
+			new UserMenu(id);
 		}else if(!check) {
 			this.IDtextField.setText("");
 			this.PWField.setText("");

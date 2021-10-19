@@ -15,20 +15,18 @@ import model.MemberVo;
 
 public class MyInfo extends JFrame implements ActionListener {
 
-	JButton JbPreView, Jbfire, JbProlong, JbCancel;
+	JButton JbPreView, Jbfire, JbProlong, btnPTreserved;
 
 	JLabel lblMyInfo, lblName, lblTel, lblAddr, lblRemainDay, lblPtTime, lblMyName, lblMyTel, lblMyAddr, lblMyReaminDay,
 			lblMyPtTime, lblMyWeight, lblMyHeight, lblHeight, lblWeight;
 
 	private String id = "";
-	private String name = "";
 
-	public MyInfo(String name, String id) {
+	public MyInfo(String id) {
 
 		FitnessDao dao = new FitnessDao();
 
 		this.id = id;
-		this.name = name;
 
 		this.setTitle("내 정보");
 
@@ -105,8 +103,9 @@ public class MyInfo extends JFrame implements ActionListener {
 		String ptTime = mv.getPtTime();
 		int height = mv.getHeight();
 		int weight = mv.getWeight();
-
-		setLabel(name, tel, addr, remainNum, ptTime, height, weight);
+		String name = mv.getname();
+		
+		getLabel(name, tel, addr, remainNum, ptTime, height, weight);
 		
 
 		// 나의 남은 횟 수
@@ -157,9 +156,9 @@ public class MyInfo extends JFrame implements ActionListener {
 		getContentPane().add(lblMyReaminDay);
 		getContentPane().add(lblMyTel);
 
-		JbCancel = new JButton("예약변경");
-		JbCancel.setBounds(401, 354, 85, 23);
-		getContentPane().add(JbCancel);
+		btnPTreserved = new JButton("예약변경");
+		btnPTreserved.setBounds(401, 354, 85, 23);
+		getContentPane().add(btnPTreserved);
 
 		lblHeight = new JLabel("키");
 		lblHeight.setFont(new Font("Dialog", Font.BOLD, 20));
@@ -188,6 +187,7 @@ public class MyInfo extends JFrame implements ActionListener {
 		this.JbPreView.addActionListener(this);
 		this.JbProlong.addActionListener(this);
 		this.Jbfire.addActionListener(this);
+		this.btnPTreserved.addActionListener(this);
 
 		this.setVisible(true);
 
@@ -195,34 +195,41 @@ public class MyInfo extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "<이전":
-			new UserMenu(name, id);
+			this.dispose();
+			new UserMenu(id);
 			break;
 		case "회원탈퇴":
+			
 			new UserFire(id);
 			break;
 		case "연장하기":
-			new PTPrice(name,id);
+			new PTPrice(id);
+			break;
+		case "예약변경":
+			new PTreserved(id);
 			break;
 		}
 	}
-		public void setLabel(String name, String tel, String addr, int remainNum, String ptTime, int height,
+		public void getLabel(String name, String tel, String addr, int remainNum, String ptTime, int height,
 			int weight) {
 
 			String num = String.valueOf(remainNum);
 			String height2 = String.valueOf(remainNum);
 			String weight2 = String.valueOf(remainNum);
-		lblMyName.setText(name);
-		lblMyAddr.setText(addr);
-		lblMyPtTime.setText(ptTime);
-		lblMyReaminDay.setText(num);
-		lblMyTel.setText(tel);
-		lblMyHeight.setText(height2);
-		lblMyWeight.setText(weight2);
+
+			lblMyName = new JLabel(name);
+			lblMyAddr = new JLabel(addr);
+			lblMyPtTime = new JLabel(ptTime);
+			lblMyReaminDay = new JLabel(num);
+			lblMyTel = new JLabel(tel);
+			lblMyHeight = new JLabel(height2);
+			lblMyWeight = new JLabel(weight2);
+
 
 	}
 	
 	public static void main(String[] args) {
-		new MyInfo("최헌성", "guest4");
+		new MyInfo("c2864");
 	}
 
 }

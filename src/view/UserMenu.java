@@ -8,19 +8,20 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import model.FitnessDao;
+
 public class UserMenu extends JFrame implements ActionListener{
 	
 	
 	JButton LogoutButton, PTButton, InfoButton, ExtensionButton;
-	private String name = "";
 	private String id="";
 	
-	public UserMenu(String name, String id) {
+	public UserMenu(String id) {
+		FitnessDao fv = new FitnessDao();
 		this.setTitle("4. 회원로그인");
-		this.name = name;
 		this.id = id;
 		
-		JLabel TitleLabel = new JLabel("<html><body style='text-align:center;'>어서오세요."+name+"님!<br />오늘도 득근 하세요!!</body></html>",JLabel.CENTER);
+		JLabel TitleLabel = new JLabel("<html><body style='text-align:center;'>어서오세요."+fv.getName(id)+"님!<br />오늘도 득근 하세요!!</body></html>",JLabel.CENTER);
 		TitleLabel.setFont(new Font("굴림", Font.BOLD, 30));
 		TitleLabel.setBounds(54, 10, 400, 113);
 		getContentPane().add(TitleLabel);
@@ -59,16 +60,14 @@ public class UserMenu extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 		case "로그아웃" : new LoginPage(); this.dispose(); break;
-		case "내 정보" : new MyInfo(name, id); this.dispose(); break;
-		case "연장하기" :new PTPrice(name,id); this.dispose(); break;
-		case "PT예약" : new PTreserved(name, id); this.dispose();break;
+		case "내 정보" : new MyInfo(id); this.dispose(); break;
+		case "연장하기" :new PTPrice(id); this.dispose(); break;
+		case "PT예약" : new PTreserved(id); this.dispose();break;
 		
 		}
 		
 	}
-	public static void main(String[] args) {
-		new UserMenu("d", "s");
-	}
+	
 
 	
 }

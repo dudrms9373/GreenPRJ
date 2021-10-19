@@ -488,7 +488,7 @@ public class FitnessDao {
 		public Boolean reserve(ReservationVo resVo){
 			Boolean check =false;
 			String sql = "INSERT INTO RESERVATION(RES_ID ,RES_DATE, MEM_ID, T_ID)";
-			sql   	  += " VALUES (SEQ_RES ,? , ? , ? , ? , ? )";
+			sql   	  += " VALUES (SEQ_RES_ID.NEXTVAL, ? , ? , ? )";
 			
 			Connection		  conn  = null;
 			PreparedStatement pstmt = null;
@@ -671,20 +671,22 @@ public class FitnessDao {
 	
 	//예약 취소하기
 		public boolean removeRes(String resDate, int memId) {
-			boolean check = false;
+			boolean check = true;
 			Connection conn = null;
 			PreparedStatement pstmt =null;
 			
 			
-			String sql = "DELETE FROM RESERVATION";
-			sql	  += " WHERE RES_DATE= ? ";
-			sql	  += " AND MEM_ID = ? ";
+			String sql = "DELETE  FROM  RESERVATION ";
+			sql		  += " WHERE RES_DATE = ?";
+			sql		  += " AND MEM_ID = ?";
+			
 			try {
+				
 				conn= DBConn.getInstance();
 				pstmt= conn.prepareStatement(sql);
-				pstmt.setString(1, resDate);
+				pstmt.setString(1,resDate);
 				pstmt.setInt(2, memId);
-				
+				pstmt.executeUpdate();
 				
 				check = true;
 			} catch (SQLException e) {
@@ -764,17 +766,19 @@ public class FitnessDao {
 		Connection conn = null;	
 		PreparedStatement pstmt = null;
 		
-		int memId = getMemId(id);
+		int resId = getResId(id);
+		
+		
 		
 		String sql = "UPDATE EXECUTION";
-		sql		  += " SET REMAIN_NUM = REMAIN_NUM + ?";
-		sql		  += " WHERE MEM_ID = ? ";
+		sql		  += " SET REMAIN_NUM = REMAIN_NUM +?";
+		sql		  += " WHERE RES_ID = ? ";
 		
 		try {
 			conn=DBConn.getInstance();
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, num);
-			pstmt.setInt(2, memId);
+			pstmt.setInt(2, resId);
 			pstmt.executeUpdate();
 			
 			result= "회수가 "+num+"회 연장되었습니다";
@@ -782,10 +786,89 @@ public class FitnessDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return result;
 	}
 	
+	private int getResId(String id) {
+		int resId= 0;
+		System.out.println("예약 번호 조회");
+		Connection conn = null;	
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		int memId=getMemId(id);
+		
+		String sql = "SELECT E.RES_ID";
+		sql		  += " FROM RESERVATION R JOIN EXECUTION E";
+		sql		  += " ON R.RES_ID = E.RES_ID ";
+		sql		  += " WHERE R.MEM_ID = ? ";
+		
+		
+			conn=DBConn.getInstance();
+			try {
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, memId);
+				rs = pstmt.executeQuery();
+				
+				if( rs.next() ){
+					memId = rs.getInt("E.RES_ID");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+					try {
+						if(rs!=null)rs.close();
+						if(pstmt!=null)pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+			}
+		
+		
+		
+		
+		return resId;
+	}
+	//회원번호로 조회
+	private int getResId2(int memId) {
+		int resId= 0;
+		System.out.println("예약 번호 조회");
+		Connection conn = null;	
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT E.RES_ID RS";
+		sql		  += " FROM RESERVATION R JOIN EXECUTION E";
+		sql		  += " ON R.RES_ID = E.RES_ID ";
+		sql		  += " WHERE R.MEM_ID = ? ";
+		
+		
+			conn=DBConn.getInstance();
+			try {
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, memId);
+				rs = pstmt.executeQuery();
+				
+				if( rs.next() ){
+					resId = rs.getInt("RS");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+					try {
+						if(rs!=null)rs.close();
+						if(pstmt!=null)pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+			}
+		
+		
+		
+		
+		return resId;
+	}
+
 	//id를 받아 회원번호를 가져오는 메소드
 	public int getMemId(String id) {
 		int memId = 0;
@@ -925,7 +1008,6 @@ public class FitnessDao {
 			int tId = getTId(tName); //트레이너번호를 가져옴
 			int memId=getMemId(id); //회원번호 조회 메소드
 			boolean check = getMemRes(tId,memId,date2); // 조회자료 존재 시 true 반환
-			
 			if(check){
 				jBtn.setEnabled(true);
 				jBtn.setBackground(Color.CYAN);
@@ -943,7 +1025,7 @@ public class FitnessDao {
 		PreparedStatement pstmt = null;
 		ResultSet		  rs    = null;
 		
-		String sql= "SELECT T_ID ";
+		String sql= " SELECT RES_ID ";
 		sql		 += " FROM RESERVATION ";
 		sql		 += " WHERE MEM_ID = ? ";
 		sql		 += " AND RES_DATE = ? ";
@@ -984,7 +1066,7 @@ public class FitnessDao {
 		PreparedStatement pstmt = null;
 		ResultSet		  rs    = null;
 		
-		String sql  = "SELECT T_ID";
+		String sql  = "SELECT T_ID ";
 		sql		   += " FROM TRAINER";
 		sql		   += " WHERE T_NAME = ? ";
 		
@@ -997,7 +1079,6 @@ public class FitnessDao {
 			if( rs.next() ){
 				tId = rs.getInt("T_ID");
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -1044,6 +1125,79 @@ public class FitnessDao {
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
+			}
+			
+			return name;
+			
+		}
+//이름로 id 조회
+			public String getId(String name){
+				String id=null;
+				
+				Connection 		  conn	= null;
+				PreparedStatement pstmt = null;
+				ResultSet		  rs    = null;
+				
+				String sql  = "SELECT ID";
+				sql		   += " FROM MEMBER";
+				sql		   += " WHERE MEM_NAME = ? ";
+				
+				try {
+					conn=DBConn.getInstance();
+					pstmt=conn.prepareStatement(sql);
+					pstmt.setString(1, name);
+					rs=pstmt.executeQuery();
+					
+					if( rs.next() ){
+						id = rs.getString("ID");
+					}
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						if(rs!=null)rs.close();
+						if(pstmt!=null)pstmt.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				return id;
+			
+		}
+	
+		//id로 이름 조회
+		public String getTName(String id){
+			String name=null;
+			
+			Connection 		  conn	= null;
+			PreparedStatement pstmt = null;
+			ResultSet		  rs    = null;
+			
+			String sql  = "SELECT T_NAME";
+			sql		   += " FROM TRAINER";
+			sql		   += " WHERE ID = ? ";
+			
+			try {
+				conn=DBConn.getInstance();
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				rs=pstmt.executeQuery();
+				
+				if( rs.next() ){
+					name = rs.getString("T_NAME");
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if(rs!=null)rs.close();
+					if(pstmt!=null)pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 			
 			return name;
